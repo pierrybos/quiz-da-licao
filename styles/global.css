@@ -31,6 +31,8 @@ input#targetUrl {
   font-size: 1.2em;
   background: none;
   border: none;
+  width: 100%;
+  text-align: center;
 }
 
 input#targetUrl:hover {

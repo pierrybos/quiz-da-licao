@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Script from "next/script";
 import { useSearchParams } from "next/navigation";
 import logo from "../public/img/logo-minha-es.png";
 import { useEffect, useState } from "react";
@@ -10,11 +9,12 @@ export default function QrCode() {
   const { Canvas } = useQRCode();
   const searchParams = useSearchParams();
 
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState("https://es.minhaes.org/quizgeral/");
 
   function afterRender() {
-    if (url == "" && searchParams.get("url") !== "")
-      setUrl(searchParams.get("url"));
+    if (searchParams.get("url")) {
+      setUrl("https://es.minhaes.org/quizgeral/1/" + searchParams.get("url"));
+    }
   }
 
   useEffect(() => {
