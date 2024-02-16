@@ -20,6 +20,7 @@ export default function QrCode() {
   const [timeRemain, setTimeRemain] = useState("10:00:00"); // Corrigido para inicializar com o valor padrão
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [alingToCenter, setAlignToCenter] = useState(true);
+  const [showQrCode, setShowQrCode] = useState(true);
 
   function afterRender() {
     if (searchParams.get("url")) {
@@ -141,21 +142,23 @@ export default function QrCode() {
               alt=""
             />
           </div>
-          <div className={`qrcode ${alingToCenter ? "center" : ""}`}>
-            <Canvas
-              text={url || "Defina a url"}
-              options={{
-                errorCorrectionLevel: "M",
-                margin: 3,
-                scale: 4,
-                width: 300,
-                color: {
-                  dark: "#1e3666",
-                  light: "#f4f4f6",
-                },
-              }}
-            />
-          </div>
+          {showQrCode && (
+            <div className={`qrcode ${alingToCenter ? "center" : ""}`}>
+              <Canvas
+                text={url || "Defina a url"}
+                options={{
+                  errorCorrectionLevel: "M",
+                  margin: 3,
+                  scale: 4,
+                  width: 300,
+                  color: {
+                    dark: "#1e3666",
+                    light: "#f4f4f6",
+                  },
+                }}
+              />
+            </div>
+          )}
         </div>
         {showClock && (
           <>
@@ -263,6 +266,16 @@ export default function QrCode() {
                   </svg>
                 </button>
               )}
+              <button onClick={() => setShowQrCode(!showQrCode)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  viewBox="0 -960 960 960"
+                  width="24"
+                >
+                  <path d="M520-120v-80h80v80h-80Zm-80-80v-200h80v200h-80Zm320-120v-160h80v160h-80Zm-80-160v-80h80v80h-80Zm-480 80v-80h80v80h-80Zm-80-80v-80h80v80h-80Zm360-280v-80h80v80h-80ZM180-660h120v-120H180v120Zm-60 60v-240h240v240H120Zm60 420h120v-120H180v120Zm-60 60v-240h240v240H120Zm540-540h120v-120H660v120Zm-60 60v-240h240v240H600Zm80 480v-120h-80v-80h160v120h80v80H680ZM520-400v-80h160v80H520Zm-160 0v-80h-80v-80h240v80h-80v80h-80Zm40-200v-160h80v80h80v80H400Zm-190-90v-60h60v60h-60Zm0 480v-60h60v60h-60Zm480-480v-60h60v60h-60Z" />
+                </svg>
+              </button>
               <button onClick={() => setExibir(false)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
