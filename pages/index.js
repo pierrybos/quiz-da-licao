@@ -8,15 +8,13 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import moment from "moment";
-import Head from 'next/head';
-
-
+import Head from "next/head";
 
 export const viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  userScalable: false
+  userScalable: false,
 };
 
 export default function Page() {
@@ -137,12 +135,18 @@ export default function Page() {
 
   return (
     <>
-
-<Head>
-        <meta name="viewport" content={`width=${viewport.width}, initial-scale=${viewport.initialScale}, maximum-scale=${viewport.maximumScale}, user-scalable=${viewport.userScalable ? 'yes' : 'no'}`} />
+      <Head>
+        <meta
+          name="viewport"
+          content={`width=${viewport.width}, initial-scale=${
+            viewport.initialScale
+          }, maximum-scale=${viewport.maximumScale}, user-scalable=${
+            viewport.userScalable ? "yes" : "no"
+          }`}
+        />
       </Head>
       <div id="containter">
-        <div className="row" style="text-aling:center"
+        <div className="row" style={{ textAlign: "center" }}>
           <h3>Acesse o Quiz pelo QRCode</h3>
           <p>Use a câmera do seu celular</p>
         </div>
