@@ -38,3 +38,16 @@ input#targetUrl {
 input#targetUrl:hover {
   border: 3px;
 }
+
+.titleTimer p {
+  margin-bottom: 0;
+  font-size: 1.8em;
+}
+
+.logo.center {
+  text-align: right;
+}
+
+.qrcode.center {
+  text-align: left;
+}
