@@ -141,7 +141,7 @@ export default function Page() {
         <meta name="viewport" content={`width=${viewport.width}, initial-scale=${viewport.initialScale}, maximum-scale=${viewport.maximumScale}, user-scalable=${viewport.userScalable ? 'yes' : 'no'}`} />
       </Head>
       <div id="containter">
-        <div className="row">
+        <div className="row" style="text-aling:center"
           <h3>Acesse o Quiz pelo QRCode</h3>
           <p>Use a câmera do seu celular</p>
         </div>
