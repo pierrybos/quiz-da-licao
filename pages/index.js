@@ -36,6 +36,10 @@ export default function Page() {
     }
   }
 
+  useEffect(() => {
+    afterRender();
+  }, [searchParams]);
+
   function toggleUrl() {
     setExibir(!exibir);
   }
