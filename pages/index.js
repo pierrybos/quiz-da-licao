@@ -34,6 +34,10 @@ export default function Page() {
     if (searchParams.get("url")) {
       setUrl("https://es.minhaes.org/quizgeral/1/" + searchParams.get("url"));
     }
+
+    if (searchParams.get("time")) {
+      setLimitTime(searchParams.get("time"));
+    }
   }
 
   useEffect(() => {
