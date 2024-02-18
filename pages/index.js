@@ -79,11 +79,16 @@ export default function Page() {
     const secondsRemaining =
       Math.floor((diff % 3600) % 60) > 0 ? Math.floor((diff % 3600) % 60) : 0;
 
-    setTimeRemain(
-      `${hoursRemaining.toString().padStart(2, "0")}:${minutesRemaining
-        .toString()
-        .padStart(2, "0")}:${secondsRemaining.toString().padStart(2, "0")}`
-    );
+    const strTimeRemain =
+      (hoursRemaining > 0
+        ? `${hoursRemaining.toString().padStart(2, "0")}h `
+        : "") +
+      (minutesRemaining > 0
+        ? `${minutesRemaining.toString().padStart(2, "0")}m `
+        : "") +
+      `${secondsRemaining.toString().padStart(2, "0")}s`;
+
+    setTimeRemain(strTimeRemain);
   }
 
   useEffect(() => {
@@ -191,7 +196,10 @@ export default function Page() {
             <div className="row">
               <div className="timer">
                 <div className="titleTimer">
-                  <p>Tempo Restante</p>
+                  <p>
+                    A Lição da Escola Sabatina
+                    <br /> termina em
+                  </p>
                 </div>
                 <div className="remainTime">
                   <p>{timeRemain}</p>
