@@ -51,3 +51,12 @@ input#targetUrl:hover {
 .qrcode.center {
   text-align: left;
 }
+
+.row.titles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.visitasTitulo {
+  color: #fa6767;
+}

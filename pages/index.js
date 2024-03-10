@@ -21,7 +21,8 @@ export default function Page() {
   const { Canvas } = useQRCode();
   const searchParams = useSearchParams();
 
-  const [url, setUrl] = useState("");
+  const [urlVisitas, setUrlVisitas] = useState("");
+  const [urlQuiz, setUrlQuiz] = useState("");
   const [exibir, setExibir] = useState(false);
   const [showClock, setShowClock] = useState(true);
   const [limitTime, setLimitTime] = useState("10:00:00");
@@ -29,14 +30,30 @@ export default function Page() {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [alingToCenter, setAlignToCenter] = useState(true);
   const [showQrCode, setShowQrCode] = useState(true);
+  const [showVisitas, setShowVisitas] = useState(true);
 
   function afterRender() {
-    if (searchParams.get("url")) {
-      setUrl("https://es.minhaes.org/quizgeral/1/" + searchParams.get("url"));
+    if (searchParams.get("url") || searchParams.get("crm")) {
+      setUrlQuiz(
+        "https://es.minhaes.org/quizgeral/1/" + searchParams.get("url")
+      );
+    }
+
+    if (searchParams.get("recepcao")) {
+      setUrlVisitas(
+        "https://minhaes.org/interessados-recepcao/interessados-recepcao.php?key=" +
+          searchParams.get("recepcao")
+      );
     }
 
     if (searchParams.get("time")) {
       setLimitTime(searchParams.get("time"));
+    }
+
+    if (searchParams.get("qroff")) {
+      setShowQrCode(false);
+      setShowVisitas(false);
+      setAlignToCenter(false);
     }
   }
 
@@ -46,25 +63,6 @@ export default function Page() {
 
   function toggleUrl() {
     setExibir(!exibir);
-  }
-
-  function redefineTimer(targetTime) {
-    calcularTimer();
-  }
-
-  function defDateByTime(limitTime) {
-    const [hours, minutes, seconds] = limitTime.split(":").map(Number);
-    const date = new Date();
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    date.setSeconds(seconds);
-    return date;
-  }
-
-  function testValidFormat(timeValid) {
-    const regex =
-      /^(?:[0-9]|0[0-9]|1[0-9]|2[0-3]):(?:[0-5]?[0-9]):(?:[0-5]?[0-9])$/;
-    return regex.test(timeValid);
   }
 
   function calcularTimer() {
@@ -159,24 +157,66 @@ export default function Page() {
         />
       </Head>
       <div id="containter">
-        <div className="row" style={{ textAlign: "center" }}>
-          <h3>Acesse o Quiz pelo QRCode</h3>
-          <p>Use a câmera do seu celular</p>
-        </div>
-        <div className="row" id="displayRow">
-          <div className={`logo ${alingToCenter ? "center" : ""}`}>
-            <Image
-              src={logo}
-              onClick={() => toggleUrl()}
-              width={272}
-              height={153}
-              alt=""
-            />
-          </div>
+        <div
+          className={`row ${showVisitas && showQrCode ? "titles" : ""}`}
+          style={{ textAlign: "center" }}
+        >
+          {showVisitas && (
+            <div className="visitasTitulo">
+              <h3>Visitante acesse o QRCode</h3>
+              <p>pela câmera do seu celular</p>
+            </div>
+          )}
           {showQrCode && (
-            <div className={`qrcode ${alingToCenter ? "center" : ""}`}>
+            <div className="quizTitulo">
+              <h3>Acesse o Quiz pelo QRCode</h3>
+              <p>Use a câmera do seu celular</p>
+            </div>
+          )}
+        </div>
+
+        <div
+          className="row"
+          id={`${showVisitas || showQrCode ? "displayRow" : ""}`}
+        >
+          {showVisitas && (
+            <div
+              className={`visitasCode ${alingToCenter ? "center" : ""}`}
+              onClick={() => toggleUrl()}
+            >
               <Canvas
-                text={url || "Defina a url"}
+                text={urlVisitas || "Informe o Link"}
+                options={{
+                  errorCorrectionLevel: "M",
+                  margin: 3,
+                  scale: 4,
+                  width: 300,
+                  color: {
+                    dark: "#fa6767",
+                    light: "#f4f4f6",
+                  },
+                }}
+              />
+            </div>
+          )}
+          {!(showVisitas && showQrCode) && (
+            <div className={`logo ${alingToCenter ? "center" : ""}`}>
+              <Image
+                src={logo}
+                onClick={() => toggleUrl()}
+                width={272}
+                height={153}
+                alt=""
+              />
+            </div>
+          )}
+          {showQrCode && (
+            <div
+              className={`qrcode ${alingToCenter ? "center" : ""}`}
+              onClick={() => toggleUrl()}
+            >
+              <Canvas
+                text={urlQuiz || "Informe o Link"}
                 options={{
                   errorCorrectionLevel: "M",
                   margin: 3,
@@ -219,10 +259,21 @@ export default function Page() {
               <input
                 type="text"
                 id="targetUrl"
-                placeholder="Defina a URL AQUI"
-                value={url}
+                placeholder="Link do QUIZ da LIÇÃO"
+                value={urlQuiz}
                 onChange={(e) => {
-                  setUrl(e.target.value);
+                  setUrlQuiz(e.target.value);
+                }}
+              />
+            </div>
+            <div className="row">
+              <input
+                type="text"
+                id="targetUrl"
+                placeholder="Link dos VISITANTES"
+                value={urlVisitas}
+                onChange={(e) => {
+                  setUrlVisitas(e.target.value);
                 }}
               />
             </div>
@@ -308,6 +359,16 @@ export default function Page() {
                   width="24"
                 >
                   <path d="M520-120v-80h80v80h-80Zm-80-80v-200h80v200h-80Zm320-120v-160h80v160h-80Zm-80-160v-80h80v80h-80Zm-480 80v-80h80v80h-80Zm-80-80v-80h80v80h-80Zm360-280v-80h80v80h-80ZM180-660h120v-120H180v120Zm-60 60v-240h240v240H120Zm60 420h120v-120H180v120Zm-60 60v-240h240v240H120Zm540-540h120v-120H660v120Zm-60 60v-240h240v240H600Zm80 480v-120h-80v-80h160v120h80v80H680ZM520-400v-80h160v80H520Zm-160 0v-80h-80v-80h240v80h-80v80h-80Zm40-200v-160h80v80h80v80H400Zm-190-90v-60h60v60h-60Zm0 480v-60h60v60h-60Zm480-480v-60h60v60h-60Z" />
+                </svg>
+              </button>
+              <button onClick={() => setShowVisitas(!showVisitas)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  viewBox="0 -960 960 960"
+                  width="24"
+                >
+                  <path d="M200-400v-80h80v80h-80Zm-80-80v-80h80v80h-80Zm360-280v-80h80v80h-80ZM180-660h120v-120H180v120Zm-60 60v-240h240v240H120Zm60 420h120v-120H180v120Zm-60 60v-240h240v240H120Zm540-540h120v-120H660v120Zm-60 60v-240h240v240H600ZM360-400v-80h-80v-80h160v160h-80Zm40-200v-160h80v80h80v80H400Zm-190-90v-60h60v60h-60Zm0 480v-60h60v60h-60Zm480-480v-60h60v60h-60Zm-50 570v-120H520v-80h120v-120h80v120h120v80H720v120h-80Z" />
                 </svg>
               </button>
               <button onClick={() => setExibir(false)}>
