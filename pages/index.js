@@ -32,6 +32,19 @@ export default function Page() {
   const [showQrCode, setShowQrCode] = useState(true);
   const [showVisitas, setShowVisitas] = useState(true);
   const [textoLicaoAcabou, setTextoLicaoAcabou] = useState(false);
+  const [audioEnable, setAudioEnable] = useState(true);
+  const [play1min, setPlay1Min] = useState(false);
+  const [play5min, setPlay5Min] = useState(false);
+  const [file1min, setFile1min] = useState(false);
+  const [file5min, setFile5min] = useState(false);
+
+  function debounce(fn, delay) {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => fn(...args), delay);
+    };
+  }
 
   function afterRender() {
     if (searchParams.get("url") || searchParams.get("crm")) {
@@ -58,13 +71,76 @@ export default function Page() {
     }
   }
 
+  async function getAudioPermission() {
+    try {
+      if ("permissions" in navigator) {
+        navigator.permissions
+          .query({
+            name: "midi",
+          })
+          .then((permission) => {
+            if (permission.state === "granted") {
+              setAudioEnable(true);
+            } else {
+              setAudioEnable(false);
+            }
+          });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
     afterRender();
+    getAudioPermission();
   }, [searchParams]);
 
   function toggleUrl() {
     setExibir(!exibir);
   }
+
+  const virtualPlayer = async function (time) {
+    let fileMp3 = "/mp3/1min.mp3";
+    if (time == 5) {
+      fileMp3 = "/mp3/5min.mp3";
+    }
+    const audioContext = new AudioContext();
+
+    const fetchResponse = await fetch(fileMp3);
+    const arrayBuffer = await fetchResponse.arrayBuffer();
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+    const bufferSource = audioContext.createBufferSource();
+    bufferSource.buffer = audioBuffer;
+    bufferSource.connect(audioContext.destination);
+
+    bufferSource.start(0);
+  };
+
+  const dispatchPlayAudio = function (
+    hoursRemaining,
+    minutesRemaining,
+    secondsRemaining
+  ) {
+    if (audioEnable) {
+      if (
+        hoursRemaining === 0 &&
+        minutesRemaining === 1 &&
+        secondsRemaining === 14
+      ) {
+        virtualPlayer(1);
+      } else if (
+        hoursRemaining === 0 &&
+        minutesRemaining === 5 &&
+        secondsRemaining === 12
+      ) {
+        virtualPlayer(5);
+      }
+    }
+  };
+
+  let debounceDispatchPlayAudio = debounce(dispatchPlayAudio, 1500);
 
   function calcularTimer() {
     const now = moment();
@@ -81,6 +157,12 @@ export default function Page() {
       pureMinutesRemaining < 0
         ? pureMinutesRemaining + 1
         : pureMinutesRemaining;
+
+    debounceDispatchPlayAudio(
+      hoursRemaining,
+      minutesRemaining,
+      secondsRemaining
+    );
 
     setTextoLicaoAcabou(secondsRemaining < 0);
 
@@ -405,6 +487,30 @@ export default function Page() {
                     width="24"
                   >
                     <path d="M800-80v-200H680v-400h120v-200h80v800h-80ZM80-80v-800h80v200h120v400H160v200H80Z" />
+                  </svg>
+                </button>
+              )}
+              {audioEnable && (
+                <button onClick={() => setAudioEnable(false)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 -960 960 960"
+                    width="24"
+                  >
+                    <path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320ZM400-606l-86 86H200v80h114l86 86v-252ZM300-480Z" />
+                  </svg>
+                </button>
+              )}
+              {!audioEnable && (
+                <button onClick={() => setAudioEnable(true)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 -960 960 960"
+                    width="24"
+                  >
+                    <path d="M792-56 671-177q-25 16-53 27.5T560-131v-82q14-5 27.5-10t25.5-12L480-368v208L280-360H120v-240h128L56-792l56-56 736 736-56 56Zm-8-232-58-58q17-31 25.5-65t8.5-70q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 53-14.5 102T784-288ZM650-422l-90-90v-130q47 22 73.5 66t26.5 96q0 15-2.5 29.5T650-422ZM480-592 376-696l104-104v208Zm-80 238v-94l-72-72H200v80h114l86 86Zm-36-130Z" />
                   </svg>
                 </button>
               )}
