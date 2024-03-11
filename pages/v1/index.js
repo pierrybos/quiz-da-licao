@@ -278,13 +278,6 @@ export default function Page() {
         >
           {showVisitas && (
             <div className="visitasTitulo">
-              <Image
-                src={logoRecepcao}
-                onClick={() => toggleUrl()}
-                width={272}
-                height={153}
-                alt=""
-              />
               <h3>Primeira vez?</h3>
               <p>
                 Aponte sua câmera para o link abaixo e vamos manter contato!
@@ -293,13 +286,6 @@ export default function Page() {
           )}
           {showQrCode && (
             <div className="quizTitulo">
-              <Image
-                src={logoQuiz}
-                onClick={() => toggleUrl()}
-                width={272}
-                height={153}
-                alt=""
-              />
               <h3>Acesse o Quiz pelo QRCode</h3>
               <p>Use a câmera do seu celular</p>
             </div>
