@@ -31,6 +31,7 @@ export default function Page() {
   const [alingToCenter, setAlignToCenter] = useState(true);
   const [showQrCode, setShowQrCode] = useState(true);
   const [showVisitas, setShowVisitas] = useState(true);
+  const [textoLicaoAcabou, setTextoLicaoAcabou] = useState(false);
 
   function afterRender() {
     if (searchParams.get("url") || searchParams.get("crm")) {
@@ -70,20 +71,22 @@ export default function Page() {
     const then = moment(limitTime, "HH:mm:ss");
     const diff = then.diff(now, "seconds");
 
+    const pureHoursRemaining = Math.floor(diff / 3600);
+    const pureMinutesRemaining = Math.floor((diff % 3600) / 60);
+    const secondsRemaining = Math.floor((diff % 3600) % 60);
+
     const hoursRemaining =
-      Math.floor(diff / 3600) > 0 ? Math.floor(diff / 3600) : 0;
+      pureHoursRemaining < 0 ? pureHoursRemaining + 1 : pureHoursRemaining;
     const minutesRemaining =
-      Math.floor((diff % 3600) / 60) > 0 ? Math.floor((diff % 3600) / 60) : 0;
-    const secondsRemaining =
-      Math.floor((diff % 3600) % 60) > 0 ? Math.floor((diff % 3600) % 60) : 0;
+      pureMinutesRemaining < 0
+        ? pureMinutesRemaining + 1
+        : pureMinutesRemaining;
+
+    setTextoLicaoAcabou(secondsRemaining < 0);
 
     const strTimeRemain =
-      (hoursRemaining > 0
-        ? `${hoursRemaining.toString().padStart(2, "0")}h `
-        : "") +
-      (minutesRemaining > 0
-        ? `${minutesRemaining.toString().padStart(2, "0")}m `
-        : "") +
+      `${hoursRemaining.toString().padStart(2, "0")}h ` +
+      `${minutesRemaining.toString().padStart(2, "0")}m ` +
       `${secondsRemaining.toString().padStart(2, "0")}s`;
 
     setTimeRemain(strTimeRemain);
@@ -127,6 +130,34 @@ export default function Page() {
       /* IE11 */
       document.msExitFullscreen();
     }
+  }
+
+  // this function increments the limitTime value
+  function handlePlusTime(moreTime) {
+    const time = moment(limitTime, "HH:mm:ss");
+
+    // Add the specified number of minutes
+    time.add(moreTime, "minutes");
+
+    // Format the updated time string with leading zeros
+    const formattedTime = time.format("HH:mm:ss");
+    setLimitTime(formattedTime);
+  }
+
+  function handlePlusMinute() {
+    handlePlusTime(1);
+  }
+
+  function handlePlusFiveMinutes() {
+    handlePlusTime(5);
+  }
+
+  function handlePlusTenMinutes() {
+    handlePlusTime(10);
+  }
+
+  function handlePlusThirtyMinutes() {
+    handlePlusTime(30);
   }
 
   useEffect(() => {
@@ -236,10 +267,18 @@ export default function Page() {
             <div className="row">
               <div className="timer">
                 <div className="titleTimer">
-                  <p>
-                    A Lição da Escola Sabatina
-                    <br /> termina em
-                  </p>
+                  {!textoLicaoAcabou && (
+                    <p>
+                      A Lição da Escola Sabatina
+                      <br /> termina em
+                    </p>
+                  )}
+                  {textoLicaoAcabou && (
+                    <p>
+                      A Lição da Escola Sabatina
+                      <br /> TERMINOU HÁ
+                    </p>
+                  )}
                 </div>
                 <div className="remainTime">
                   <p>{timeRemain}</p>
@@ -251,9 +290,51 @@ export default function Page() {
         {exibir && (
           <>
             {showClock && (
-              <div className="row">
-                <TimePicker value={limitTime} onChange={handleTimeChange} />
-              </div>
+              <>
+                <div className="row">
+                  <TimePicker value={limitTime} onChange={handleTimeChange} />
+                </div>
+                <a onClick={handlePlusMinute}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 -960 960 960"
+                    width="24"
+                  >
+                    <path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z" />
+                  </svg>
+                </a>
+                <a onClick={handlePlusFiveMinutes}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 -960 960 960"
+                    width="24"
+                  >
+                    <path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80ZM380-320v-60h120v-40H380v-140h180v60H440v40h80q17 0 28.5 11.5T560-420v60q0 17-11.5 28.5T520-320H380Z" />
+                  </svg>
+                </a>
+                <a onClick={handlePlusTenMinutes}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 -960 960 960"
+                    width="24"
+                  >
+                    <path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80ZM360-320v-180h-60v-60h120v240h-60Zm140 0q-17 0-28.5-11.5T460-360v-160q0-17 11.5-28.5T500-560h80q17 0 28.5 11.5T620-520v160q0 17-11.5 28.5T580-320h-80Zm20-60h40v-120h-40v120Z" />
+                  </svg>
+                </a>
+                <a onClick={handlePlusThirtyMinutes}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 -960 960 960"
+                    width="24"
+                  >
+                    <path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80ZM300-320v-60h100v-40h-60v-40h60v-40H300v-60h120q17 0 28.5 11.5T460-520v160q0 17-11.5 28.5T420-320H300Zm240 0q-17 0-28.5-11.5T500-360v-160q0-17 11.5-28.5T540-560h80q17 0 28.5 11.5T660-520v160q0 17-11.5 28.5T620-320h-80Zm20-60h40v-120h-40v120Z" />
+                  </svg>
+                </a>
+              </>
             )}
             <div className="row">
               <input
