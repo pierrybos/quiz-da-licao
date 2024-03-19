@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import logo from "../public/img/logo-minha-es.png";
-import logoQuiz from "../public/img/logo-minha-es.png";
-import logoRecepcao from "../public/img/interessados-recepcao.png";
+import logo from "../../public/img/logo-minha-es.png";
+import logoQuiz from "../../public/img/logo-minha-es.png";
+import logoRecepcao from "../../public/img/interessados-recepcao.png";
 import { useEffect, useState } from "react";
 import { useQRCode } from "next-qrcode";
 import TimePicker from "react-time-picker";

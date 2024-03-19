@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.left-sidebar {
+  align-items: center;
+  text-align: center;
+  width: 25%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  opacity: 0.5;
+  margin-left: 10%;
+  border-radius: 50px;
+}
+
+.left-sidebar > * {
+  opacity: 1;
+}
+
+.sidebar-item {
+}
+
+.logo > img {
+  width: 272px;
+  height: 153px;
+}
+
+.logo img,
+.qrcode img {
+  max-width: 100%;
+  height: auto;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
