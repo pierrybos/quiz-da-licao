@@ -5,16 +5,15 @@ import "../styles/global.css";
 import { wrapper, makeStore } from "../store/store";
 
 function App({ Component, pageProps }) {
-    const { store, persistor } = makeStore();
+  const { store, persistor } = makeStore();
 
-  
   return (
-      <Provider store={store}>
+    <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Component {...pageProps} />
       </PersistGate>
     </Provider>
-    );
+  );
 }
 
 export default App;

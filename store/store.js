@@ -32,11 +32,8 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, combinedReducers);
 
-export const makeStore = () =>{
-  const store = createStore(
-    persistedReducer,
-  );
+export const makeStore = () => {
+  const store = createStore(persistedReducer);
   const persistor = persistStore(store);
-  return {store, persistor};
-}
-
+  return { store, persistor };
+};
