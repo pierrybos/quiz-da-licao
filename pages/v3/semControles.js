@@ -1,7 +1,7 @@
 import Qrcode from "../../src/components/Qrcode";
 import Timer from "../../src/components/Timer";
 import Head from "next/head";
-import estilos from "./css/styles";
+import estilos from "../../src/components/estilos";
 import TitleQuiz from "../../src/components/TitleQuiz";
 import TitleVisitantes from "../../src/components/TitleVisitantes";
 import { useSelector } from "react-redux";
