@@ -30,10 +30,8 @@ const estilos = {
   leftSidebar: {
     alignItems: "center",
     textAlign: "center",
-    width: "25%",
     backgroundColor: "rgba(240, 240, 240, 0.5)",
     padding: "20px",
-    marginLeft: "10%",
     borderRadius: "50px",
   },
   sidebarItem: {},

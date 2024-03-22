@@ -60,3 +60,15 @@ input#targetUrl:hover {
 .visitasTitulo {
   color: #fa6767;
 }
+
+.visible {
+  display: block; /* ou qualquer outra propriedade de exibição que você preferir */
+}
+
+div.hidden {
+  display: none !important;
+}
+
+div.painelControll {
+  background: white;
+}
