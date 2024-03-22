@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 //import "./styles.v3.module.css"; // Arquivo de estilos CSS
 import moment from "moment";
 
@@ -71,12 +72,19 @@ import {
   setLeftSideBarWidth,
   setFontSizeTimerPlace,
   setLeftSideBarPosition,
+  setLeftSideBarTopPosition,
+  setVisitanteTextSize,
+  setQuizTextSize,
+  setQuizLogoSize,
+  setVisitanteLogoSize,
+  setTimerTextColor,
 } from "../../store/stylizationSlice";
 import Slider from "@mui/material/Slider";
 
 export default () => {
   const [controlls, setControlls] = useState(false);
   const dispatch = useDispatch();
+  const searchParams = useSearchParams();
 
   const router = useRouter();
 
@@ -121,8 +129,16 @@ export default () => {
     (state) => state.stylization.visitanteColor
   );
   const quizQrSize = useSelector((state) => state.stylization.quizQrSize);
+  const quizLogoSize = useSelector((state) => state.stylization.quizLogoSize);
+  const visitanteLogoSize = useSelector(
+    (state) => state.stylization.visitanteLogoSize
+  );
   const visitanteQrSize = useSelector(
     (state) => state.stylization.visitanteQrSize
+  );
+  const quizTextSize = useSelector((state) => state.stylization.quizTextSize);
+  const visitanteTextSize = useSelector(
+    (state) => state.stylization.visitanteTextSize
   );
   const leftSideBarWidth = useSelector(
     (state) => state.stylization.leftSideBarWidth
@@ -135,6 +151,9 @@ export default () => {
   const leftSideBarPosition = useSelector(
     (state) => state.stylization.leftSideBarPosition
   );
+  const leftSideBarTopPosition = useSelector(
+    (state) => state.stylization.leftSideBarTopPosition
+  );
 
   const [isVisible, setIsVisible] = useState(true);
 
@@ -144,6 +163,56 @@ export default () => {
 
   const channel = new BroadcastChannel("semanaSanta");
   const isFullScreen = UseFullScreen();
+
+  function afterRender() {
+    if (searchParams.get("quiz")) {
+      dispatchUpdate(
+        {
+          target: {
+            value:
+              "https://es.minhaes.org/quizgeral/1/" + searchParams.get("quiz"),
+          },
+        },
+        "setUrlQuiz"
+      );
+    }
+
+    if (searchParams.get("visitas")) {
+      dispatchUpdate(
+        {
+          target: {
+            value:
+              "https://minhaes.org/interessados-recepcao/interessados-recepcao.php?key=" +
+              searchParams.get("visitas"),
+          },
+        },
+        "setUrlVisitas"
+      );
+    }
+
+    if (searchParams.get("time")) {
+      dispatchUpdate(
+        {
+          target: {
+            value: searchParams.get("time"),
+          },
+        },
+        "setLimitTime"
+      );
+    }
+
+    if (searchParams.get("painel")) {
+      setControlls(false);
+      setIsVisible(false);
+    } else {
+      setControlls(true);
+      setIsVisible(true);
+    }
+  }
+
+  useEffect(() => {
+    afterRender();
+  }, [searchParams]);
 
   // this function increments the limitTime value
   function handlePlusTime(moreTime) {
@@ -295,6 +364,26 @@ export default () => {
       fn: setLeftSideBarPosition,
       redux: true,
     },
+    setLeftSideBarTopPosition: {
+      fn: setLeftSideBarTopPosition,
+      redux: true,
+    },
+    setQuizTextSize: {
+      fn: setQuizTextSize,
+      redux: true,
+    },
+    setVisitanteTextSize: {
+      fn: setVisitanteTextSize,
+      redux: true,
+    },
+    setVisitanteLogoSize: {
+      fn: setVisitanteLogoSize,
+      redux: true,
+    },
+    setQuizLogoSize: {
+      fn: setQuizLogoSize,
+      redux: true,
+    },
   };
 
   function fullScreenFunc() {
@@ -340,6 +429,7 @@ export default () => {
   }
 
   function turnOffPageFullScreen() {
+    dispatch(hideShowFullScreen());
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.mozCancelFullScreen) {
@@ -447,7 +537,7 @@ export default () => {
     }
   }
 
-  useEffect(() => {
+  /*  useEffect(() => {
     const painel = router.query.painel;
     if (painel == "false") {
       setControlls(false);
@@ -456,7 +546,7 @@ export default () => {
       setControlls(true);
       setIsVisible(true);
     }
-  }, [router]);
+  }, [router]); // */
   return (
     <>
       <div className={!isFullScreen ? "visible" : "hidden"}>
@@ -490,17 +580,17 @@ export default () => {
       <div className={isVisible ? "visible painelControll" : "hidden"}>
         <AppBar position="static">
           <Toolbar>
+            <Button color="inherit" onClick={openUrlWithNewParam}>
+              Apresentar
+            </Button>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Controle da Aplicação
+            </Typography>
             <Button
               color="inherit"
               onClick={(e) => dispatchUpdate(e, "setShowFullScreen")}
             >
               Tela Cheia
-            </Button>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Controle da Aplicação
-            </Typography>
-            <Button color="inherit" onClick={openUrlWithNewParam}>
-              Nova Tela
             </Button>
           </Toolbar>
         </AppBar>
@@ -526,10 +616,19 @@ export default () => {
               />
             </Grid>
             <Grid item xs={12} sm={12}>
-              <label>Posição da área esquerda</label>
+              <label>Posição da área à esquerda</label>
               <Slider
                 value={leftSideBarPosition}
                 onChange={(e) => dispatchUpdate(e, "setLeftSideBarPosition")}
+                min={0}
+                max={100}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <label>Posição da área ao topo</label>
+              <Slider
+                value={leftSideBarTopPosition}
+                onChange={(e) => dispatchUpdate(e, "setLeftSideBarTopPosition")}
                 min={0}
                 max={100}
               />
@@ -556,22 +655,6 @@ export default () => {
                 value={subTitleUrlQuiz}
                 onChange={(e) => dispatchUpdate(e, "setSubTitleUrlQuiz")}
               />
-              <ColorPickerChange
-                label="Cor QrCode Quiz"
-                value={quizColor}
-                fnOnColorChange={(e) => {
-                  dispatchUpdate(
-                    { target: { value: rgbToHex(e.r, e.g, e.b) } },
-                    "setQuizColor"
-                  );
-                }}
-              />
-              <Slider
-                value={quizQrSize}
-                onChange={(e) => dispatchUpdate(e, "setQuizQrSize")}
-                min={10}
-                max={2000}
-              />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -594,7 +677,22 @@ export default () => {
                 variant="outlined"
                 value={subTitleUrlVisitas}
                 onChange={(e) => dispatchUpdate(e, "setSubTitleUrlVisitas")}
-              />
+              />{" "}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <ColorPickerChange
+                label="Cor QrCode Quiz"
+                value={quizColor}
+                fnOnColorChange={(e) => {
+                  dispatchUpdate(
+                    { target: { value: rgbToHex(e.r, e.g, e.b) } },
+                    "setQuizColor"
+                  );
+                }}
+              />{" "}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
               <ColorPickerChange
                 label="Cor QrCode Visitantes"
                 value={visitanteColor}
@@ -604,12 +702,63 @@ export default () => {
                     "setVisitanteColor"
                   );
                 }}
+              />{" "}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <label>Tamanho Logo Quiz</label>
+              <Slider
+                value={quizLogoSize}
+                onChange={(e) => dispatchUpdate(e, "setQuizLogoSize")}
+                min={10}
+                max={2000}
               />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <label>Tamanho Logo Visitantes</label>
+              <Slider
+                value={visitanteLogoSize}
+                onChange={(e) => dispatchUpdate(e, "setVisitanteLogoSize")}
+                min={10}
+                max={2000}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <label>Tamanho QrCode Quiz</label>
+              <Slider
+                value={quizQrSize}
+                onChange={(e) => dispatchUpdate(e, "setQuizQrSize")}
+                min={10}
+                max={2000}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <label>Tamanho QrCode Visitantes</label>
               <Slider
                 value={visitanteQrSize}
                 onChange={(e) => dispatchUpdate(e, "setVisitanteQrSize")}
                 min={10}
                 max={2000}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <label>Tamanho Texto Título Quiz</label>
+              <Slider
+                value={quizTextSize}
+                onChange={(e) => dispatchUpdate(e, "setQuizTextSize")}
+                min={0.1}
+                max={20}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <label>Tamanho Texto Título Visitantes</label>
+              <Slider
+                value={visitanteTextSize}
+                onChange={(e) => dispatchUpdate(e, "setVisitanteTextSize")}
+                min={0.1}
+                max={20}
               />
             </Grid>
             <Grid item xs={12}>

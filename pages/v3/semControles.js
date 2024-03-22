@@ -34,11 +34,6 @@ export default () => {
     ...styles.qrcode,
   };
 
-  const logoStyle = {
-    ...styles.sidebarItem,
-    ...styles.logo,
-  };
-
   const leftSideBarWidth = useSelector(
     (state) => state.stylization.leftSideBarWidth
   );
@@ -49,6 +44,19 @@ export default () => {
 
   const fontSizeTimerPlace = useSelector(
     (state) => state.stylization.fontSizeTimerPlace
+  );
+
+  const visitanteTextSize = useSelector(
+    (state) => state.stylization.visitanteTextSize
+  );
+  const quizTextSize = useSelector((state) => state.stylization.quizTextSize);
+  const quizLogoSize = useSelector((state) => state.stylization.quizLogoSize);
+  const visitanteLogoSize = useSelector(
+    (state) => state.stylization.visitanteLogoSize
+  );
+
+  const leftSideBarTopPosition = useSelector(
+    (state) => state.stylization.leftSideBarTopPosition
   );
 
   return (
@@ -84,10 +92,25 @@ export default () => {
               .leftSideBar {
                 width: ${leftSideBarWidth}%;
                 margin-left: ${leftSideBarPosition}%;
+                margin-top: ${leftSideBarTopPosition}%;
               }
               .timerPlace {
                 font-size: ${fontSizeTimerPlace}em;
               }
+              .quizTitlePlace {
+                font-size: ${quizTextSize}em;
+              }
+              .visitanteTitlePlace {
+                font-size: ${visitanteTextSize}em;
+              }
+
+              .logoQuiz img {
+                width: ${quizLogoSize}px; 
+              }
+              .logoVisitas img {
+                width: ${visitanteLogoSize}px;
+              }
+
           `}
           </style>
         </Head>
@@ -100,12 +123,12 @@ export default () => {
             className={showBothQr || showQrQuizPlace ? "visible" : "hidden"}
             style={styles.sidebarItem}
           >
-            <div>
+            <div className="quizTitlePlace">
               <div className={showTextoQuiz ? "visible" : "hidden"}>
                 <TitleQuiz />
               </div>
             </div>
-            <div className={logoStyle}>
+            <div className="logoQuiz">
               <div className={showLogoQuiz ? "visible" : "hidden"}>
                 <img src="v2/src/images/logo.png" alt="Logo" />
               </div>
@@ -121,12 +144,12 @@ export default () => {
               showBothQr || showQrVisitantesPlace ? "visible" : "hidden"
             }
           >
-            <div>
+            <div className="visitanteTitlePlace">
               <div className={showTextoVisitantes ? "visible" : "hidden"}>
                 <TitleVisitantes />
               </div>
             </div>
-            <div className={logoStyle}>
+            <div className="logoVisitas">
               <div className={showLogoVisitantes ? "visible" : "hidden"}>
                 <img
                   src="v2/src/images/interessados-recepcao.png"

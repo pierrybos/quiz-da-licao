@@ -1,5 +1,6 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { createWrapper } from "next-redux-wrapper";
+import { combineReducers, createStore } from "redux";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 import users from "./usersSlice";
 import counter from "./counterSlice";
@@ -9,7 +10,7 @@ import timer from "./timerSlice";
 import booleans from "./booleansSlice";
 import stylization from "./stylizationSlice";
 
-const combinedReducers = combineReducers({
+const slicesList = {
   counter,
   users,
   url,
@@ -17,11 +18,25 @@ const combinedReducers = combineReducers({
   timer,
   booleans,
   stylization,
-});
+};
 
-export const makeStore = () =>
-  configureStore({
-    reducer: combinedReducers,
-  });
+const slicesListArray = Object.values(slicesList);
 
-export const wrapper = createWrapper(makeStore);
+const combinedReducers = combineReducers(slicesList);
+
+const persistConfig = {
+  key: "root",
+  storage,
+  // Adicione quaisquer configurações adicionais aqui, se necessário
+};
+
+const persistedReducer = persistReducer(persistConfig, combinedReducers);
+
+export const makeStore = () =>{
+  const store = createStore(
+    persistedReducer,
+  );
+  const persistor = persistStore(store);
+  return {store, persistor};
+}
+

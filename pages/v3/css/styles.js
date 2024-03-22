@@ -34,15 +34,7 @@ const estilos = {
     padding: "20px",
     borderRadius: "50px",
   },
-  sidebarItem: {},
-  logo: {
-    width: "272px",
-    height: "153px",
-  },
-  "logo img": {
-    maxWidth: "100%",
-    height: "auto",
-  },
+
   qrcode: {
     width: "272px",
     height: "153px",

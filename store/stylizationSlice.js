@@ -4,6 +4,8 @@ const initialState = {
   quizColor: "#1e3666",
   quizColorLight: "#f4f4f6",
   quizQrSize: 300,
+  quizLogoSize: 272,
+  visitanteLogoSize: 272,
   quizTextSize: 1,
   visitanteColor: "#1e3666",
   visitanteColorLight: "#f4f4f6",
@@ -12,6 +14,7 @@ const initialState = {
   timerTextColor: "#1e3666",
   leftSideBarWidth: 30,
   leftSideBarPosition: 10,
+  leftSideBarTopPosition: 5,
   fontSizeTimerPlace: 1,
 };
 
@@ -49,6 +52,15 @@ export const stylization = createSlice({
     setLeftSideBarPosition(state, action) {
       state.leftSideBarPosition = action.payload;
     },
+    setLeftSideBarTopPosition(state, action) {
+      state.leftSideBarTopPosition = action.payload;
+    },
+    setVisitanteLogoSize(state, action) {
+      state.visitanteLogoSize = action.payload;
+    },
+    setQuizLogoSize(state, action) {
+      state.quizLogoSize = action.payload;
+    },
   },
 });
 
@@ -63,6 +75,9 @@ export const {
   setFontSizeTimerPlace,
   setLeftSideBarWidth,
   setLeftSideBarPosition,
+  setLeftSideBarTopPosition,
+  setVisitanteLogoSize,
+  setQuizLogoSize,
 } = stylization.actions;
 
 export default stylization.reducer;
