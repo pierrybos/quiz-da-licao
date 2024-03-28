@@ -2,16 +2,39 @@ import Head from "next/head";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useDispatch, useSelector } from "react-redux";
+import Accordion from "@mui/joy/Accordion";
+import AccordionDetails from "@mui/joy/AccordionDetails";
+import AccordionGroup from "@mui/joy/AccordionGroup";
+import AccordionSummary from "@mui/joy/AccordionSummary";
 
-
-import { Edit, Visibility, VisibilityOff, VisibilityOffRounded } from "@mui/icons-material";
-import { useState } from "react";
+import {
+  TextField,
+  Button,
+  Switch,
+  Toolbar,
+  AppBar,
+  Container,
+  Grid,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  InputAdornment,
+  Input,
+  Stack,
+  ToggleButtonGroup,
+  ToggleButton,
+  Slider,
+} from "@mui/material";
+import {
+  Edit,
+  Visibility,
+  VisibilityOff,
+  VisibilityOffRounded,
+} from "@mui/icons-material";
+import { useEffect, useState } from "react";
 
 import {
   setShowQuizCenterPlace,
@@ -33,9 +56,7 @@ const style = {
 };
 
 export default () => {
-  const [formats, setFormats] = useState(() => ['bold', 'italic']);
   const dispatch = useDispatch();
-
 
   const [editComponent, setEditComponent] = useState(false);
   const handleOpen = () => setEditComponent(true);
@@ -43,24 +64,68 @@ export default () => {
   const [hasQuiz, setHasQuiz] = useState(false);
   const [hasVisitantes, setHasVisitantes] = useState(false);
   const [isDisplay, setIsDisplay] = useState(false);
-  const showQuizCenterPlace = useSelector((state) => state.booleans.showQuizCenterPlace);
-  const showVisitantesCenterPlace = useSelector((state) => state.booleans.showVisitantesCenterPlace);
-  const showTimerCenterPlace = useSelector((state) => state.booleans.showTimerCenterPlace);
-  const showCenterPlace = useSelector((state) => { return state.booleans.showCenterPlace});
+  const showQuizCenterPlace = useSelector(
+    (state) => state.booleans.showQuizCenterPlace
+  );
+  const leftSideBarWidth = useSelector(
+    (state) => state.stylization.leftSideBarWidth
+  );
+  const fontSizeTimerPlace = useSelector(
+    (state) => state.stylization.fontSizeTimerPlace
+  );
+  const leftSideBarPosition = useSelector(
+    (state) => state.stylization.leftSideBarPosition
+  );
+  const leftSideBarTopPosition = useSelector(
+    (state) => state.stylization.leftSideBarTopPosition
+  );
+  const urlQuiz = useSelector((state) => state.url.urlQuiz);
 
-  
-  
-  const handleFormat = (
-    event,
-    newFormats
-  ) => {
+  const showVisitantesCenterPlace = useSelector(
+    (state) => state.booleans.showVisitantesCenterPlace
+  );
+  const showTimerCenterPlace = useSelector(
+    (state) => state.booleans.showTimerCenterPlace
+  );
+  const showCenterPlace = useSelector((state) => {
+    return state.booleans.showCenterPlace;
+  });
+  const subTitleUrlQuiz = useSelector((state) => state.texto.subTitleUrlQuiz);
 
-    dispatch(setShowQuizCenterPlace(newFormats.indexOf('quiz') !== -1));
-    dispatch(setShowVisitantesCenterPlace(newFormats.indexOf('visitantes') !== -1));
-    dispatch(setShowCenterPlace(newFormats.indexOf('display') !== -1));
-    dispatch(setShowTimerCenterPlace(newFormats.indexOf('timer') !== -1));
+  const [formats, setFormats] = useState(() => []);
+  const titleUrlQuiz = useSelector((state) => state.texto.titleUrlQuiz);
+
+  const handleFormat = (event, newFormats) => {
+    dispatch(setShowQuizCenterPlace(newFormats.indexOf("quiz") !== -1));
+    dispatch(
+      setShowVisitantesCenterPlace(newFormats.indexOf("visitantes") !== -1)
+    );
+    dispatch(setShowCenterPlace(newFormats.indexOf("display") !== -1));
+    dispatch(setShowTimerCenterPlace(newFormats.indexOf("timer") !== -1));
     setFormats(newFormats);
   };
+
+  useEffect(() => {
+    let arrOptions = [];
+    if (showQuizCenterPlace) {
+      arrOptions.push("quiz");
+    }
+    if (showVisitantesCenterPlace) {
+      arrOptions.push("visitantes");
+    }
+    if (showCenterPlace) {
+      arrOptions.push("display");
+    }
+    if (showTimerCenterPlace) {
+      arrOptions.push("timer");
+    }
+    setFormats(arrOptions);
+  }, [
+    showQuizCenterPlace,
+    showVisitantesCenterPlace,
+    showCenterPlace,
+    showTimerCenterPlace,
+  ]);
 
   return (
     <>
@@ -105,25 +170,25 @@ export default () => {
           <Edit />
         </IconButton>
         <ToggleButtonGroup
-      value={formats}
-      onChange={handleFormat}
-      aria-label="text formatting"
-    >
-      <ToggleButton value="Quiz" aria-label="Quiz">
-        Quiz
-      </ToggleButton>
-      <ToggleButton value="Visitantes" aria-label="Visitantes">
-        Visitantes
-      </ToggleButton>
-      <ToggleButton value="underlined" aria-label="Timer">
-        Timer
-      </ToggleButton>
-      <ToggleButton value="display" aria-label="display">
-        {showCenterPlace && <VisibilityIcon />}
-        {!showCenterPlace && <VisibilityOffIcon />}
-      </ToggleButton>
-    </ToggleButtonGroup>
-    <pre>variavel passada aqui: {JSON.stringify(showCenterPlace) }</pre>
+          value={formats}
+          onChange={handleFormat}
+          aria-label="text formatting"
+        >
+          <ToggleButton value="Quiz" aria-label="Quiz">
+            Quiz
+          </ToggleButton>
+          <ToggleButton value="Visitantes" aria-label="Visitantes">
+            Visitantes
+          </ToggleButton>
+          <ToggleButton value="underlined" aria-label="Timer">
+            Timer
+          </ToggleButton>
+          <ToggleButton value="display" aria-label="display">
+            {showCenterPlace && <VisibilityIcon />}
+            {!showCenterPlace && <VisibilityOffIcon />}
+          </ToggleButton>
+        </ToggleButtonGroup>
+        <pre>variavel passada aqui: {JSON.stringify(showCenterPlace)}</pre>
       </div>
       <Modal
         open={editComponent}
@@ -132,12 +197,151 @@ export default () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            
-          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12}>
+              <label>Tamanho da área esquerda</label>
+              <Slider
+                value={leftSideBarWidth}
+                onChange={(e) => dispatchUpdate(e, "setLeftSideBarWidth")}
+                min={1}
+                max={100}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <label>Tamanho do texto do timer</label>
+              <Slider
+                value={fontSizeTimerPlace}
+                onChange={(e) => dispatchUpdate(e, "setFontSizeTimerPlace")}
+                min={0.1}
+                step={0.1}
+                max={20}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <label>Posição da área à esquerda</label>
+              <Slider
+                value={leftSideBarPosition}
+                onChange={(e) => dispatchUpdate(e, "setLeftSideBarPosition")}
+                min={0}
+                max={100}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <label>Posição da área ao topo</label>
+              <Slider
+                value={leftSideBarTopPosition}
+                onChange={(e) => dispatchUpdate(e, "setLeftSideBarTopPosition")}
+                min={0}
+                max={100}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Link do Quiz"
+                variant="outlined"
+                value={urlQuiz}
+                onChange={(e) => dispatchUpdate(e, "setUrlQuiz")}
+              />
+              <TextField
+                fullWidth
+                label="Titulo do Quiz"
+                variant="outlined"
+                value={titleUrlQuiz}
+                onChange={(e) => dispatchUpdate(e, "setTitleUrlQuiz")}
+              />
+              <TextField
+                fullWidth
+                label="Subtítulo do Quiz"
+                variant="outlined"
+                value={subTitleUrlQuiz}
+                onChange={(e) => dispatchUpdate(e, "setSubTitleUrlQuiz")}
+              />
+            </Grid>
+          </Grid>
+          <AccordionGroup size="lg" variant="soft">
+            <Accordion>
+              <AccordionSummary>Quiz</AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12}>
+                    <label>Tamanho da área esquerda</label>
+                    <Slider
+                      value={leftSideBarWidth}
+                      onChange={(e) => dispatchUpdate(e, "setLeftSideBarWidth")}
+                      min={1}
+                      max={100}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <label>Tamanho do texto do timer</label>
+                    <Slider
+                      value={fontSizeTimerPlace}
+                      onChange={(e) =>
+                        dispatchUpdate(e, "setFontSizeTimerPlace")
+                      }
+                      min={0.1}
+                      step={0.1}
+                      max={20}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <label>Posição da área à esquerda</label>
+                    <Slider
+                      value={leftSideBarPosition}
+                      onChange={(e) =>
+                        dispatchUpdate(e, "setLeftSideBarPosition")
+                      }
+                      min={0}
+                      max={100}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <label>Posição da área ao topo</label>
+                    <Slider
+                      value={leftSideBarTopPosition}
+                      onChange={(e) =>
+                        dispatchUpdate(e, "setLeftSideBarTopPosition")
+                      }
+                      min={0}
+                      max={100}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Link do Quiz"
+                      variant="outlined"
+                      value={urlQuiz}
+                      onChange={(e) => dispatchUpdate(e, "setUrlQuiz")}
+                    />
+                    <TextField
+                      fullWidth
+                      label="Titulo do Quiz"
+                      variant="outlined"
+                      value={titleUrlQuiz}
+                      onChange={(e) => dispatchUpdate(e, "setTitleUrlQuiz")}
+                    />
+                    <TextField
+                      fullWidth
+                      label="Subtítulo do Quiz"
+                      variant="outlined"
+                      value={subTitleUrlQuiz}
+                      onChange={(e) => dispatchUpdate(e, "setSubTitleUrlQuiz")}
+                    />
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary>Visitantes</AccordionSummary>
+              <AccordionDetails></AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary>Timer</AccordionSummary>
+              <AccordionDetails></AccordionDetails>
+            </Accordion>
+          </AccordionGroup>
         </Box>
       </Modal>
     </>
