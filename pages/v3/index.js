@@ -748,7 +748,6 @@ export default () => {
                 value={quizTextSize}
                 onChange={(e) => dispatchUpdate(e, "setQuizTextSize")}
                 min={0.1}
-                step={0.1}
                 max={20}
               />
             </Grid>
@@ -759,7 +758,6 @@ export default () => {
                 value={visitanteTextSize}
                 onChange={(e) => dispatchUpdate(e, "setVisitanteTextSize")}
                 min={0.1}
-                step={0.1}
                 max={20}
               />
             </Grid>
