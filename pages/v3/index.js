@@ -144,9 +144,6 @@ export default () => {
   const visitanteTextSize = useSelector(
     (state) => state.stylization.visitanteTextSize
   );
-  const leftSideBarWidth = useSelector(
-    (state) => state.stylization.leftSideBarWidth
-  );
   const fontSizeTimerPlace = useSelector(
     (state) => state.stylization.fontSizeTimerPlace
   );

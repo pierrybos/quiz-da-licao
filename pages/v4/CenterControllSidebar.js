@@ -1,40 +1,9 @@
 import Head from "next/head";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useDispatch, useSelector } from "react-redux";
-import Accordion from "@mui/joy/Accordion";
-import AccordionDetails from "@mui/joy/AccordionDetails";
-import AccordionGroup from "@mui/joy/AccordionGroup";
-import AccordionSummary from "@mui/joy/AccordionSummary";
-
-import {
-  TextField,
-  Button,
-  Switch,
-  Toolbar,
-  AppBar,
-  Container,
-  Grid,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  InputAdornment,
-  Input,
-  Stack,
-  ToggleButtonGroup,
-  ToggleButton,
-  Slider,
-} from "@mui/material";
-import {
-  Edit,
-  Visibility,
-  VisibilityOff,
-  VisibilityOffRounded,
-} from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { Edit } from "@mui/icons-material";
+import { useState } from "react";
 
 import {
   setShowQuizCenterPlace,
@@ -42,6 +11,16 @@ import {
   setShowTimerCenterPlace,
   setShowCenterPlace,
 } from "../../store/booleansSlice";
+
+import {
+  setCenterSideBarWidth,
+  setCenterSideBarMarginTop,
+  setCenterBackgroundColor,
+  setCenterSideBarLeft,
+} from "../../store/stylizationSlice";
+
+import ToogleElemento from "./ToogleElemento";
+import Controle from "./Controle";
 
 const style = {
   position: "absolute",
@@ -57,29 +36,21 @@ const style = {
 
 export default () => {
   const dispatch = useDispatch();
+  const channel = new BroadcastChannel("semanaSanta");
 
   const [editComponent, setEditComponent] = useState(false);
   const handleOpen = () => setEditComponent(true);
   const handleClose = () => setEditComponent(false);
-  const [hasQuiz, setHasQuiz] = useState(false);
-  const [hasVisitantes, setHasVisitantes] = useState(false);
-  const [isDisplay, setIsDisplay] = useState(false);
   const showQuizCenterPlace = useSelector(
     (state) => state.booleans.showQuizCenterPlace
   );
-  const leftSideBarWidth = useSelector(
-    (state) => state.stylization.leftSideBarWidth
+  const centerSideBarMarginTop = useSelector(
+    (state) => state.stylization.centerSideBarMarginTop
   );
-  const fontSizeTimerPlace = useSelector(
-    (state) => state.stylization.fontSizeTimerPlace
+
+  const centerSideBarWidth = useSelector(
+    (state) => state.stylization.centerSideBarWidth
   );
-  const leftSideBarPosition = useSelector(
-    (state) => state.stylization.leftSideBarPosition
-  );
-  const leftSideBarTopPosition = useSelector(
-    (state) => state.stylization.leftSideBarTopPosition
-  );
-  const urlQuiz = useSelector((state) => state.url.urlQuiz);
 
   const showVisitantesCenterPlace = useSelector(
     (state) => state.booleans.showVisitantesCenterPlace
@@ -90,10 +61,16 @@ export default () => {
   const showCenterPlace = useSelector((state) => {
     return state.booleans.showCenterPlace;
   });
-  const subTitleUrlQuiz = useSelector((state) => state.texto.subTitleUrlQuiz);
+
+  const centerBackgroundColor = useSelector(
+    (state) => state.stylization.centerBackgroundColor
+  );
+
+  const centerSideBarLeft = useSelector(
+    (state) => state.stylization.centerSideBarLeft
+  );
 
   const [formats, setFormats] = useState(() => []);
-  const titleUrlQuiz = useSelector((state) => state.texto.titleUrlQuiz);
 
   const handleFormat = (event, newFormats) => {
     dispatch(setShowQuizCenterPlace(newFormats.indexOf("quiz") !== -1));
@@ -105,27 +82,49 @@ export default () => {
     setFormats(newFormats);
   };
 
-  useEffect(() => {
-    let arrOptions = [];
-    if (showQuizCenterPlace) {
-      arrOptions.push("quiz");
+  const methods = {
+    setCenterSideBarWidth: {
+      fn: setCenterSideBarWidth,
+    },
+    setCenterSideBarMarginTop: {
+      fn: setCenterSideBarMarginTop,
+    },
+    setCenterBackgroundColor: {
+      fn: setCenterBackgroundColor,
+    },
+    setCenterSideBarLeft: {
+      fn: setCenterSideBarLeft,
+    },
+    setShowCenterPlace: {
+      fn: setShowCenterPlace,
+    },
+    setShowQuizCenterPlace: {
+      fn: setShowQuizCenterPlace,
+    },
+    setShowVisitantesCenterPlace: {
+      fn: setShowVisitantesCenterPlace,
+    },
+    setShowTimerCenterPlace: {
+      fn: setShowTimerCenterPlace,
+    },
+  };
+
+  function dispatchUpdate(ev, methodName) {
+    {
+      console.log("dispatchUpdate");
+      console.log(methodName);
+      console.log(ev.target.value);
+      console.log(ev.target);
+      console.log(methods);
+      console.log(methods[methodName]);
+      dispatch(methods[methodName].fn(ev.target.value));
+      const message = {
+        id: methodName,
+        content: ev.target.value,
+      };
+      channel.postMessage(message);
     }
-    if (showVisitantesCenterPlace) {
-      arrOptions.push("visitantes");
-    }
-    if (showCenterPlace) {
-      arrOptions.push("display");
-    }
-    if (showTimerCenterPlace) {
-      arrOptions.push("timer");
-    }
-    setFormats(arrOptions);
-  }, [
-    showQuizCenterPlace,
-    showVisitantesCenterPlace,
-    showCenterPlace,
-    showTimerCenterPlace,
-  ]);
+  }
 
   return (
     <>
@@ -169,26 +168,18 @@ export default () => {
         >
           <Edit />
         </IconButton>
-        <ToggleButtonGroup
-          value={formats}
-          onChange={handleFormat}
-          aria-label="text formatting"
-        >
-          <ToggleButton value="Quiz" aria-label="Quiz">
-            Quiz
-          </ToggleButton>
-          <ToggleButton value="Visitantes" aria-label="Visitantes">
-            Visitantes
-          </ToggleButton>
-          <ToggleButton value="underlined" aria-label="Timer">
-            Timer
-          </ToggleButton>
-          <ToggleButton value="display" aria-label="display">
-            {showCenterPlace && <VisibilityIcon />}
-            {!showCenterPlace && <VisibilityOffIcon />}
-          </ToggleButton>
-        </ToggleButtonGroup>
-        <pre>variavel passada aqui: {JSON.stringify(showCenterPlace)}</pre>
+        <ToogleElemento
+          display={showCenterPlace}
+          fnDisplay={(e) => dispatchUpdate(e, "setShowCenterPlace")}
+          quiz={showQuizCenterPlace}
+          fnQuiz={(e) => dispatchUpdate(e, "setShowQuizCenterPlace")}
+          visitantes={showVisitantesCenterPlace}
+          fnVisitantes={(e) =>
+            dispatchUpdate(e, "setShowVisitantesCenterPlace")
+          }
+          timer={showTimerCenterPlace}
+          fnTimer={(e) => dispatchUpdate(e, "setShowTimerCenterPlace")}
+        />
       </div>
       <Modal
         open={editComponent}
@@ -196,153 +187,34 @@ export default () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12}>
-              <label>Tamanho da área esquerda</label>
-              <Slider
-                value={leftSideBarWidth}
-                onChange={(e) => dispatchUpdate(e, "setLeftSideBarWidth")}
-                min={1}
-                max={100}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <label>Tamanho do texto do timer</label>
-              <Slider
-                value={fontSizeTimerPlace}
-                onChange={(e) => dispatchUpdate(e, "setFontSizeTimerPlace")}
-                min={0.1}
-                step={0.1}
-                max={20}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <label>Posição da área à esquerda</label>
-              <Slider
-                value={leftSideBarPosition}
-                onChange={(e) => dispatchUpdate(e, "setLeftSideBarPosition")}
-                min={0}
-                max={100}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <label>Posição da área ao topo</label>
-              <Slider
-                value={leftSideBarTopPosition}
-                onChange={(e) => dispatchUpdate(e, "setLeftSideBarTopPosition")}
-                min={0}
-                max={100}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Link do Quiz"
-                variant="outlined"
-                value={urlQuiz}
-                onChange={(e) => dispatchUpdate(e, "setUrlQuiz")}
-              />
-              <TextField
-                fullWidth
-                label="Titulo do Quiz"
-                variant="outlined"
-                value={titleUrlQuiz}
-                onChange={(e) => dispatchUpdate(e, "setTitleUrlQuiz")}
-              />
-              <TextField
-                fullWidth
-                label="Subtítulo do Quiz"
-                variant="outlined"
-                value={subTitleUrlQuiz}
-                onChange={(e) => dispatchUpdate(e, "setSubTitleUrlQuiz")}
-              />
-            </Grid>
-          </Grid>
-          <AccordionGroup size="lg" variant="soft">
-            <Accordion>
-              <AccordionSummary>Quiz</AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={12}>
-                    <label>Tamanho da área esquerda</label>
-                    <Slider
-                      value={leftSideBarWidth}
-                      onChange={(e) => dispatchUpdate(e, "setLeftSideBarWidth")}
-                      min={1}
-                      max={100}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <label>Tamanho do texto do timer</label>
-                    <Slider
-                      value={fontSizeTimerPlace}
-                      onChange={(e) =>
-                        dispatchUpdate(e, "setFontSizeTimerPlace")
-                      }
-                      min={0.1}
-                      step={0.1}
-                      max={20}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <label>Posição da área à esquerda</label>
-                    <Slider
-                      value={leftSideBarPosition}
-                      onChange={(e) =>
-                        dispatchUpdate(e, "setLeftSideBarPosition")
-                      }
-                      min={0}
-                      max={100}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <label>Posição da área ao topo</label>
-                    <Slider
-                      value={leftSideBarTopPosition}
-                      onChange={(e) =>
-                        dispatchUpdate(e, "setLeftSideBarTopPosition")
-                      }
-                      min={0}
-                      max={100}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label="Link do Quiz"
-                      variant="outlined"
-                      value={urlQuiz}
-                      onChange={(e) => dispatchUpdate(e, "setUrlQuiz")}
-                    />
-                    <TextField
-                      fullWidth
-                      label="Titulo do Quiz"
-                      variant="outlined"
-                      value={titleUrlQuiz}
-                      onChange={(e) => dispatchUpdate(e, "setTitleUrlQuiz")}
-                    />
-                    <TextField
-                      fullWidth
-                      label="Subtítulo do Quiz"
-                      variant="outlined"
-                      value={subTitleUrlQuiz}
-                      onChange={(e) => dispatchUpdate(e, "setSubTitleUrlQuiz")}
-                    />
-                  </Grid>
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary>Visitantes</AccordionSummary>
-              <AccordionDetails></AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary>Timer</AccordionSummary>
-              <AccordionDetails></AccordionDetails>
-            </Accordion>
-          </AccordionGroup>
-        </Box>
+        <Controle
+          target="Central"
+          styles={style}
+          sideBarWidth={centerSideBarWidth}
+          sideBarLeftPosition={centerSideBarLeft}
+          fnSideBarLeftPosition={(e) =>
+            dispatchUpdate(e, "setCenterSideBarLeft")
+          }
+          fnWidthArea={(e) => dispatchUpdate(e, "setCenterSideBarWidth")}
+          sideBarTopPosition={centerSideBarMarginTop}
+          fnSideBarTopPosition={(e) =>
+            dispatchUpdate(e, "setCenterSideBarMarginTop")
+          }
+          displayed={showCenterPlace}
+          fnDisplayed={(e) => dispatchUpdate(e, "setShowCenterPlace")}
+          centerBackgroundColor={centerBackgroundColor}
+          fnBackgroundColor={(e) =>
+            dispatchUpdate(e, "setCenterBackgroundColor")
+          }
+          quizDisplay={showQuizCenterPlace}
+          fnQuizDisplay={(e) => dispatchUpdate(e, "setShowQuizCenterPlace")}
+          visitantesDisplay={showVisitantesCenterPlace}
+          fnVisitantesDisplay={(e) =>
+            dispatchUpdate(e, "setShowVisitantesCenterPlace")
+          }
+          timerDisplay={showTimerCenterPlace}
+          fnTimerDisplay={(e) => dispatchUpdate(e, "setShowTimerCenterPlace")}
+        />
       </Modal>
     </>
   );

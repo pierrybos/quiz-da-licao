@@ -1,25 +1,101 @@
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  setLeftSideBarWidth,
+  setLeftSideBarMarginTop,
+  setLeftBackgroundColor,
+  setLeftSideBarLeft,
+} from "../../store/stylizationSlice";
+import {
+  setShowQuizLeftPlace,
+  setShowVisitantesLeftPlace,
+  setShowTimerLeftPlace,
+  setShowLeftPlace,
+} from "../../store/booleansSlice";
 
 export default () => {
+  const dispatch = useDispatch();
+  const channel = new BroadcastChannel("semanaSanta");
+  const leftSideBarMarginTop = useSelector(
+    (state) => state.stylization.leftSideBarMarginTop
+  );
+
+  const leftBackgroundColor = useSelector(
+    (state) => state.stylization.leftBackgroundColor
+  );
+
+  const leftSideBarWidth = useSelector(
+    (state) => state.stylization.leftSideBarWidth
+  );
+
+  const leftSideBarLeft = useSelector(
+    (state) => state.stylization.leftSideBarLeft
+  );
+  const showLeftPlace = useSelector((state) => state.booleans.showLeftPlace);
+
+  const methods = {
+    setLeftSideBarMarginTop: {
+      fn: setLeftSideBarMarginTop,
+    },
+    setLeftSideBarWidth: {
+      fn: setLeftSideBarWidth,
+    },
+    setLeftBackgroundColor: {
+      fn: setLeftBackgroundColor,
+    },
+    setLeftSideBarLeft: {
+      fn: setLeftSideBarLeft,
+    },
+    setShowLeftPlace: {
+      fn: setShowLeftPlace,
+    },
+    setShowQuizLeftPlace: {
+      fn: setShowQuizLeftPlace,
+    },
+    setShowVisitantesLeftPlace: {
+      fn: setShowVisitantesLeftPlace,
+    },
+    setShowTimerLeftPlace: {
+      fn: setShowTimerLeftPlace,
+    },
+  };
+
+  useEffect(() => {
+    channel.onmessage = (ev) => {
+      if (methods[ev.data.id]) {
+        if (methods[ev.data.id].noredux == true) {
+          methods[ev.data.id].fn(ev.data.content);
+        } else {
+          dispatch(methods[ev.data.id].fn(ev.data.content));
+        }
+      } else {
+        console.log("Método não encontrado:", ev.data);
+      }
+    };
+
+    return () => {
+      channel.close();
+    };
+  }, [channel]);
   return (
     <>
       <div>
         <Head>
           <style>
             {`
-              .leftSideBar {
-  position: absolute;
-  height: 100px; /* Ajuste conforme necessário */
-  width: 100px; /* Ajuste conforme necessário */
-}
-
 .leftSideBar {
-  left: 0;
-  background-color: blue; /* Altere a cor conforme desejado */
+  visibility: ${showLeftPlace ? "visible" : "hidden"};
+  position: relative;
+  top: ${leftSideBarMarginTop}%;
+  height: 100px; /* Ajuste conforme necessário */
+  width: ${leftSideBarWidth}%; /* Ajuste conforme necessário */
+  background-color: rgba(${leftBackgroundColor.r}, ${leftBackgroundColor.g}, ${
+              leftBackgroundColor.b
+            }, ${leftBackgroundColor.a}); 
+  left: ${leftSideBarLeft - leftSideBarWidth / 2}%;
 }
-
-
-
               `}
           </style>
         </Head>
