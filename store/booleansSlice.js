@@ -13,12 +13,29 @@ const initialState = {
   showQrVisitantesPlace: false,
   showQrQuizPlace: true,
   showFullScreen: false,
+  showQuizCenterPlace: false,
+  showVisitantesCenterPlace: false, 
+  showTimerCenterPlace: false,
+  showCenterPlace: false,
 };
 
 export const booleansSlice = createSlice({
   name: "booleans",
   initialState,
   reducers: {
+    setShowQuizCenterPlace: (state, action) => {
+      state.showQuizCenterPlace = action.payload;
+    },
+    setShowVisitantesCenterPlace: (state, action) => {
+      state.showVisitantesCenterPlace = action.payload;
+    },
+    setShowTimerCenterPlace: (state, action) => {
+      state.showTimerCenterPlace = action.payload;
+    },
+    setShowCenterPlace: (state, action) => {
+      console.log(action);
+      state.showCenterPlace = action.payload;
+    },
     setShowTimer: (state, action) => {
       state.showTimer = !state.showTimer;
     },
@@ -93,5 +110,9 @@ export const {
   setShowFullScreen,
   displayShowFullScreen,
   hideShowFullScreen,
+  setShowQuizCenterPlace,
+setShowVisitantesCenterPlace,
+setShowTimerCenterPlace,
+setShowCenterPlace,
 } = booleansSlice.actions;
 export default booleansSlice.reducer;
