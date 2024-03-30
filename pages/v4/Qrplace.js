@@ -31,6 +31,16 @@ export default ({
           </style>
         </Head>
       </div>
+      {/*
+      @TODO: add image
+      @TODO: add qrcode
+      @TODO: add text
+      @TODO: add link
+      @TODO: add title
+      @TODO: add subtitle
+      @TODO: add styles based the redux variabels
+      @TODO: make timer and visitantes files
+      */}
       <div className="qrPlace">
         <div className="textSide">{title}</div>
         <div className="imageSide">{subtitle}</div>
