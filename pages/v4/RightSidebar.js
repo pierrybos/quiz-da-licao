@@ -87,14 +87,15 @@ export default () => {
             {`
  .rightSideBar {
    visibility: ${showRightPlace ? "visible" : "hidden"};
-  position: relative;
+  position: absolute;
   top: ${rightSideBarMarginTop}%;
-  height: 100px; /* Ajuste conforme necessário */
+  padding: 30px;
+  min-height: 100px; /* Ajuste conforme necessário */
   width: ${rightSideBarWidth}%; /* Ajuste conforme necessário */
   background-color: rgba(${rightBackgroundColor.r}, ${
               rightBackgroundColor.g
             }, ${rightBackgroundColor.b}, ${rightBackgroundColor.a}); 
-  right: ${rightSideBarRight - rightSideBarWidth / 2}%;
+  right: ${rightSideBarRight}%;
 }
 
               `}

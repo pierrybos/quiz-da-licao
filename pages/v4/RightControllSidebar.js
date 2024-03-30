@@ -118,12 +118,6 @@ export default () => {
         <Head>
           <style>
             {`
- .rightSideBar {
-  position: absolute;
-  height: 100px; /* Ajuste conforme necessário */
-  width: 100px; /* Ajuste conforme necessário */
-}
-
 .rightSideBar {
   right: 0;
   background-color: green; /* Altere a cor conforme desejado */
@@ -133,7 +127,7 @@ export default () => {
           </style>
         </Head>
       </div>
-      <div className="rightSideBar">
+      <div className="sideBar rightSideBar">
         <IconButton
           className="handle right"
           aria-label="Edit"
@@ -149,7 +143,7 @@ export default () => {
           visitantes={showVisitantesRightPlace}
           fnVisitantes={(e) => dispatchUpdate(e, "setShowVisitantesRightPlace")}
           timer={showTimerRightPlace}
-          fnTimer={(e) => dispatchUpdate(e, "setShowTimerrRightPlace")}
+          fnTimer={(e) => dispatchUpdate(e, "setShowTimerRightPlace")}
         />
       </div>
       <Modal
@@ -162,8 +156,8 @@ export default () => {
           target="Direita"
           styles={style}
           sideBarWidth={rightSideBarWidth}
-          sideBarRightPosition={rightSideBarRight}
-          fnSideBarRightPosition={(e) =>
+          sideBarLeftPosition={rightSideBarRight}
+          fnSideBarLeftPosition={(e) =>
             dispatchUpdate(e, "setRightSideBarRight")
           }
           fnWidthArea={(e) => dispatchUpdate(e, "setRightSideBarWidth")}

@@ -118,24 +118,15 @@ export default () => {
         <Head>
           <style>
             {`
-              .leftSideBar {
-  position: absolute;
-  height: 100px; /* Ajuste conforme necessário */
-  width: 100px; /* Ajuste conforme necessário */
-}
-
 .leftSideBar {
   left: 0;
   background-color: blue; /* Altere a cor conforme desejado */
 }
-
-
-
               `}
           </style>
         </Head>
       </div>
-      <div className="leftSideBar">
+      <div className="sideBar leftSideBar">
         <IconButton
           className="handle left"
           aria-label="Edit"

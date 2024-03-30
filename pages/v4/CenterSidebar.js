@@ -91,7 +91,8 @@ export default () => {
   visibility: ${showCenterPlace ? "visible" : "hidden"};
   position: relative;
   top: ${centerSideBarMarginTop}%;
-  height: 100px; /* Ajuste conforme necessário */
+  padding: 30px;
+  min-height: 100px; /* Ajuste conforme necessário */
   width: ${centerSideBarWidth}%; /* Ajuste conforme necessário */
   background-color: rgba(${centerBackgroundColor.r}, ${
               centerBackgroundColor.g

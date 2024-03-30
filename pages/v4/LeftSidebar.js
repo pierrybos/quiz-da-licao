@@ -14,6 +14,7 @@ import {
   setShowTimerLeftPlace,
   setShowLeftPlace,
 } from "../../store/booleansSlice";
+import Quiz from "./Quiz";
 
 export default () => {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ export default () => {
     (state) => state.stylization.leftSideBarLeft
   );
   const showLeftPlace = useSelector((state) => state.booleans.showLeftPlace);
+  const showQuizLeftPlace = useSelector(
+    (state) => state.booleans.showQuizLeftPlace
+  );
 
   const methods = {
     setLeftSideBarMarginTop: {
@@ -87,20 +91,23 @@ export default () => {
             {`
 .leftSideBar {
   visibility: ${showLeftPlace ? "visible" : "hidden"};
-  position: relative;
+  position: absolute;
   top: ${leftSideBarMarginTop}%;
-  height: 100px; /* Ajuste conforme necessário */
+  padding: 30px;
+  min-height: 100px; /* Ajuste conforme necessário */
   width: ${leftSideBarWidth}%; /* Ajuste conforme necessário */
   background-color: rgba(${leftBackgroundColor.r}, ${leftBackgroundColor.g}, ${
               leftBackgroundColor.b
             }, ${leftBackgroundColor.a}); 
-  left: ${leftSideBarLeft - leftSideBarWidth / 2}%;
+  left: ${leftSideBarLeft}%;
 }
               `}
           </style>
         </Head>
       </div>
-      <div className="leftSideBar"></div>
+      <div className="leftSideBar">
+        <Quiz show={showQuizLeftPlace} />
+      </div>
     </>
   );
 };

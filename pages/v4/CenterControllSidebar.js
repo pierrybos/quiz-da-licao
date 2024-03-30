@@ -132,15 +132,7 @@ export default () => {
         <Head>
           <style>
             {`
-              .centerSideBar {
-                position: absolute;
-                height: min-100px; /* Ajuste conforme necessário */
-                width: min-100px; /* Ajuste conforme necessário */
-                padding: 30px; 
-              }
-
               .handle {
-                
                 position: absolute;
                 width: 10px;
                 height: 10px;
@@ -160,7 +152,7 @@ export default () => {
           </style>
         </Head>
       </div>
-      <div className="centerSideBar">
+      <div className="sideBar centerSideBar">
         <IconButton
           className="handle left"
           aria-label="Edit"

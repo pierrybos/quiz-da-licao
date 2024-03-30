@@ -9,6 +9,7 @@ import texto from "./textoSlice";
 import timer from "./timerSlice";
 import booleans from "./booleansSlice";
 import stylization from "./stylizationSlice";
+import qrcode from "./qrcodeSlice";
 
 const slicesList = {
   counter,
@@ -18,6 +19,7 @@ const slicesList = {
   timer,
   booleans,
   stylization,
+  qrcode,
 };
 
 const slicesListArray = Object.values(slicesList);
