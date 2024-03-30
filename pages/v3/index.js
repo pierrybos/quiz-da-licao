@@ -85,6 +85,9 @@ export default () => {
   const [controlls, setControlls] = useState(false);
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
+  const leftSideBarWidth = useSelector(
+    (state) => state.stylization.leftSideBarWidth
+  );
 
   const router = useRouter();
 
@@ -94,6 +97,7 @@ export default () => {
   const subTitleUrlVisitas = useSelector(
     (state) => state.texto.subTitleUrlVisitas
   );
+  titleUrlQuiz;
   const titleUrlVisitas = useSelector((state) => state.texto.titleUrlVisitas);
   const subTitleUrlQuiz = useSelector((state) => state.texto.subTitleUrlQuiz);
   const limitTime = useSelector((state) => state.timer.limitTime);
@@ -139,9 +143,6 @@ export default () => {
   const quizTextSize = useSelector((state) => state.stylization.quizTextSize);
   const visitanteTextSize = useSelector(
     (state) => state.stylization.visitanteTextSize
-  );
-  const leftSideBarWidth = useSelector(
-    (state) => state.stylization.leftSideBarWidth
   );
   const fontSizeTimerPlace = useSelector(
     (state) => state.stylization.fontSizeTimerPlace

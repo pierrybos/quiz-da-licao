@@ -16,6 +16,16 @@ const initialState = {
   leftSideBarPosition: 10,
   leftSideBarTopPosition: 5,
   fontSizeTimerPlace: 1,
+  centerSideBarWidth: 50,
+  centerSideBarMarginTop: 5,
+  centerBackgroundColor: { r: 99, g: 99, b: 99, a: 100 },
+  centerSideBarLeft: 50,
+  leftBackgroundColor: { r: 99, g: 99, b: 99, a: 100 },
+  leftSideBarMarginTop: 50,
+  leftSideBarLeft: 50,
+  rightBackgroundColor: { r: 99, g: 99, b: 99, a: 100 },
+  rightSideBarMarginTop: 50,
+  rightSideBarRight: 50,
 };
 
 export const stylization = createSlice({
@@ -61,6 +71,40 @@ export const stylization = createSlice({
     setQuizLogoSize(state, action) {
       state.quizLogoSize = action.payload;
     },
+
+    setCenterSideBarWidth(state, action) {
+      state.centerSideBarWidth = action.payload;
+    },
+    setCenterSideBarMarginTop(state, action) {
+      state.centerSideBarMarginTop = action.payload;
+    },
+    setCenterBackgroundColor(state, action) {
+      state.centerBackgroundColor = action.payload;
+    },
+    setCenterSideBarLeft(state, action) {
+      state.centerSideBarLeft = action.payload;
+    },
+    setLeftBackgroundColor(state, action) {
+      state.leftBackgroundColor = action.payload;
+    },
+    setLeftSideBarMarginTop(state, action) {
+      state.leftSideBarMarginTop = action.payload;
+    },
+    setLeftSideBarLeft(state, action) {
+      state.leftSideBarLeft = action.payload;
+    },
+    setRightBackgroundColor(state, action) {
+      state.rightBackgroundColor = action.payload;
+    },
+    setRightSideBarMarginTop(state, action) {
+      state.rightSideBarMarginTop = action.payload;
+    },
+    setRightSideBarRight(state, action) {
+      state.rightSideBarRight = action.payload;
+    },
+    setRightSideBarWidth(state, action) {
+      state.rightSideBarWidth = action.payload;
+    },
   },
 });
 
@@ -78,6 +122,33 @@ export const {
   setLeftSideBarTopPosition,
   setVisitanteLogoSize,
   setQuizLogoSize,
+  setCenterSideBarWidth,
+  setCenterSideBarMarginTop,
+  setCenterBackgroundColor,
+  setCenterSideBarLeft,
+  setLeftBackgroundColor,
+  setLeftSideBarMarginTop,
+  setLeftSideBarLeft,
+  setRightBackgroundColor,
+  setRightSideBarMarginTop,
+  setRightSideBarRight,
+  setRightSideBarWidth,
 } = stylization.actions;
 
 export default stylization.reducer;
+
+/**
+ * 
+ * setShowQuizRightPlace
+: 
+{fn: undefined}
+setShowRightPlace
+: 
+{fn: undefined}
+setShowTimerRightPlace
+: 
+{fn: undefined}
+setShowVisitantesRightPlace
+: 
+{fn: undefined}
+ */

@@ -14,9 +14,17 @@ const initialState = {
   showQrQuizPlace: true,
   showFullScreen: false,
   showQuizCenterPlace: false,
-  showVisitantesCenterPlace: false, 
+  showVisitantesCenterPlace: false,
   showTimerCenterPlace: false,
   showCenterPlace: false,
+  showQuizLeftPlace: false,
+  showVisitantesLeftPlace: false,
+  showTimerLeftPlace: false,
+  leftSideBarWidth: 0,
+  leftSideBarLeft: 0,
+  showQuizRightPlace: false,
+  showVisitantesRightPlace: false,
+  showTimerRightPlace: false,
 };
 
 export const booleansSlice = createSlice({
@@ -90,6 +98,31 @@ export const booleansSlice = createSlice({
     hideShowFullScreen: (state, action) => {
       state.showFullScreen = false;
     },
+    setShowQuizLeftPlace: (state, action) => {
+      state.showQuizLeftPlace = action.payload;
+    },
+    setShowLeftPlace: (state, action) => {
+      state.showLeftPlace = action.payload;
+    },
+    setShowTimerLeftPlace: (state, action) => {
+      state.showTimerLeftPlace = action.payload;
+    },
+
+    setShowVisitantesLeftPlace: (state, action) => {
+      state.showVisitantesLeftPlace = action.payload;
+    },
+    setShowQuizRightPlace(state, action) {
+      state.showQuizRightPlace = action.payload;
+    },
+    setShowRightPlace(state, action) {
+      state.showRightPlace = action.payload;
+    },
+    setShowTimerRightPlace(state, action) {
+      state.showTimerRightPlace = action.payload;
+    },
+    setShowVisitantesRightPlace(state, action) {
+      state.showVisitantesRightPlace = action.payload;
+    },
   },
 });
 
@@ -111,8 +144,16 @@ export const {
   displayShowFullScreen,
   hideShowFullScreen,
   setShowQuizCenterPlace,
-setShowVisitantesCenterPlace,
-setShowTimerCenterPlace,
-setShowCenterPlace,
+  setShowVisitantesCenterPlace,
+  setShowTimerCenterPlace,
+  setShowCenterPlace,
+  setShowQuizLeftPlace,
+  setShowLeftPlace,
+  setShowTimerLeftPlace,
+  setShowVisitantesLeftPlace,
+  setShowQuizRightPlace,
+  setShowRightPlace,
+  setShowTimerRightPlace,
+  setShowVisitantesRightPlace,
 } = booleansSlice.actions;
 export default booleansSlice.reducer;

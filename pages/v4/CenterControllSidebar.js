@@ -1,16 +1,8 @@
 import Head from "next/head";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useDispatch, useSelector } from "react-redux";
-
-
-import { Edit, Visibility, VisibilityOff, VisibilityOffRounded } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 import { useState } from "react";
 
 import {
@@ -19,6 +11,16 @@ import {
   setShowTimerCenterPlace,
   setShowCenterPlace,
 } from "../../store/booleansSlice";
+
+import {
+  setCenterSideBarWidth,
+  setCenterSideBarMarginTop,
+  setCenterBackgroundColor,
+  setCenterSideBarLeft,
+} from "../../store/stylizationSlice";
+
+import ToogleElemento from "./ToogleElemento";
+import Controle from "./Controle";
 
 const style = {
   position: "absolute",
@@ -33,34 +35,96 @@ const style = {
 };
 
 export default () => {
-  const [formats, setFormats] = useState(() => ['bold', 'italic']);
   const dispatch = useDispatch();
-
+  const channel = new BroadcastChannel("semanaSanta");
 
   const [editComponent, setEditComponent] = useState(false);
   const handleOpen = () => setEditComponent(true);
   const handleClose = () => setEditComponent(false);
-  const [hasQuiz, setHasQuiz] = useState(false);
-  const [hasVisitantes, setHasVisitantes] = useState(false);
-  const [isDisplay, setIsDisplay] = useState(false);
-  const showQuizCenterPlace = useSelector((state) => state.booleans.showQuizCenterPlace);
-  const showVisitantesCenterPlace = useSelector((state) => state.booleans.showVisitantesCenterPlace);
-  const showTimerCenterPlace = useSelector((state) => state.booleans.showTimerCenterPlace);
-  const showCenterPlace = useSelector((state) => { return state.booleans.showCenterPlace});
+  const showQuizCenterPlace = useSelector(
+    (state) => state.booleans.showQuizCenterPlace
+  );
+  const centerSideBarMarginTop = useSelector(
+    (state) => state.stylization.centerSideBarMarginTop
+  );
 
-  
-  
-  const handleFormat = (
-    event,
-    newFormats
-  ) => {
+  const centerSideBarWidth = useSelector(
+    (state) => state.stylization.centerSideBarWidth
+  );
 
-    dispatch(setShowQuizCenterPlace(newFormats.indexOf('quiz') !== -1));
-    dispatch(setShowVisitantesCenterPlace(newFormats.indexOf('visitantes') !== -1));
-    dispatch(setShowCenterPlace(newFormats.indexOf('display') !== -1));
-    dispatch(setShowTimerCenterPlace(newFormats.indexOf('timer') !== -1));
+  const showVisitantesCenterPlace = useSelector(
+    (state) => state.booleans.showVisitantesCenterPlace
+  );
+  const showTimerCenterPlace = useSelector(
+    (state) => state.booleans.showTimerCenterPlace
+  );
+  const showCenterPlace = useSelector((state) => {
+    return state.booleans.showCenterPlace;
+  });
+
+  const centerBackgroundColor = useSelector(
+    (state) => state.stylization.centerBackgroundColor
+  );
+
+  const centerSideBarLeft = useSelector(
+    (state) => state.stylization.centerSideBarLeft
+  );
+
+  const [formats, setFormats] = useState(() => []);
+
+  const handleFormat = (event, newFormats) => {
+    dispatch(setShowQuizCenterPlace(newFormats.indexOf("quiz") !== -1));
+    dispatch(
+      setShowVisitantesCenterPlace(newFormats.indexOf("visitantes") !== -1)
+    );
+    dispatch(setShowCenterPlace(newFormats.indexOf("display") !== -1));
+    dispatch(setShowTimerCenterPlace(newFormats.indexOf("timer") !== -1));
     setFormats(newFormats);
   };
+
+  const methods = {
+    setCenterSideBarWidth: {
+      fn: setCenterSideBarWidth,
+    },
+    setCenterSideBarMarginTop: {
+      fn: setCenterSideBarMarginTop,
+    },
+    setCenterBackgroundColor: {
+      fn: setCenterBackgroundColor,
+    },
+    setCenterSideBarLeft: {
+      fn: setCenterSideBarLeft,
+    },
+    setShowCenterPlace: {
+      fn: setShowCenterPlace,
+    },
+    setShowQuizCenterPlace: {
+      fn: setShowQuizCenterPlace,
+    },
+    setShowVisitantesCenterPlace: {
+      fn: setShowVisitantesCenterPlace,
+    },
+    setShowTimerCenterPlace: {
+      fn: setShowTimerCenterPlace,
+    },
+  };
+
+  function dispatchUpdate(ev, methodName) {
+    {
+      console.log("dispatchUpdate");
+      console.log(methodName);
+      console.log(ev.target.value);
+      console.log(ev.target);
+      console.log(methods);
+      console.log(methods[methodName]);
+      dispatch(methods[methodName].fn(ev.target.value));
+      const message = {
+        id: methodName,
+        content: ev.target.value,
+      };
+      channel.postMessage(message);
+    }
+  }
 
   return (
     <>
@@ -104,26 +168,18 @@ export default () => {
         >
           <Edit />
         </IconButton>
-        <ToggleButtonGroup
-      value={formats}
-      onChange={handleFormat}
-      aria-label="text formatting"
-    >
-      <ToggleButton value="Quiz" aria-label="Quiz">
-        Quiz
-      </ToggleButton>
-      <ToggleButton value="Visitantes" aria-label="Visitantes">
-        Visitantes
-      </ToggleButton>
-      <ToggleButton value="underlined" aria-label="Timer">
-        Timer
-      </ToggleButton>
-      <ToggleButton value="display" aria-label="display">
-        {showCenterPlace && <VisibilityIcon />}
-        {!showCenterPlace && <VisibilityOffIcon />}
-      </ToggleButton>
-    </ToggleButtonGroup>
-    <pre>variavel passada aqui: {JSON.stringify(showCenterPlace) }</pre>
+        <ToogleElemento
+          display={showCenterPlace}
+          fnDisplay={(e) => dispatchUpdate(e, "setShowCenterPlace")}
+          quiz={showQuizCenterPlace}
+          fnQuiz={(e) => dispatchUpdate(e, "setShowQuizCenterPlace")}
+          visitantes={showVisitantesCenterPlace}
+          fnVisitantes={(e) =>
+            dispatchUpdate(e, "setShowVisitantesCenterPlace")
+          }
+          timer={showTimerCenterPlace}
+          fnTimer={(e) => dispatchUpdate(e, "setShowTimerCenterPlace")}
+        />
       </div>
       <Modal
         open={editComponent}
@@ -131,14 +187,34 @@ export default () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            
-          </Typography>
-        </Box>
+        <Controle
+          target="Central"
+          styles={style}
+          sideBarWidth={centerSideBarWidth}
+          sideBarLeftPosition={centerSideBarLeft}
+          fnSideBarLeftPosition={(e) =>
+            dispatchUpdate(e, "setCenterSideBarLeft")
+          }
+          fnWidthArea={(e) => dispatchUpdate(e, "setCenterSideBarWidth")}
+          sideBarTopPosition={centerSideBarMarginTop}
+          fnSideBarTopPosition={(e) =>
+            dispatchUpdate(e, "setCenterSideBarMarginTop")
+          }
+          displayed={showCenterPlace}
+          fnDisplayed={(e) => dispatchUpdate(e, "setShowCenterPlace")}
+          centerBackgroundColor={centerBackgroundColor}
+          fnBackgroundColor={(e) =>
+            dispatchUpdate(e, "setCenterBackgroundColor")
+          }
+          quizDisplay={showQuizCenterPlace}
+          fnQuizDisplay={(e) => dispatchUpdate(e, "setShowQuizCenterPlace")}
+          visitantesDisplay={showVisitantesCenterPlace}
+          fnVisitantesDisplay={(e) =>
+            dispatchUpdate(e, "setShowVisitantesCenterPlace")
+          }
+          timerDisplay={showTimerCenterPlace}
+          fnTimerDisplay={(e) => dispatchUpdate(e, "setShowTimerCenterPlace")}
+        />
       </Modal>
     </>
   );
