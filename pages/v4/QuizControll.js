@@ -143,7 +143,7 @@ export default () => {
           fnImagemSize={(e) => dispatchUpdate(e, "setQuizImageSize")}
           fnQrcodeSize={(e) => dispatchUpdate(e, "setQuizQrcodeSize")}
           fnQrcodeColor={(e) => dispatchUpdate(e, "setQuizColor")}
-          fnTextoColor={(e) => dispatchUpdate(e, "setQuizTextColor")}
+          fnTextColor={(e) => dispatchUpdate(e, "setQuizTextColor")}
           fnTitle={(e) => dispatchUpdate(e, "setQuizTitle")}
           fnSubtitle={(e) => dispatchUpdate(e, "setQuizSubtitle")}
           fnLink={(e) => dispatchUpdate(e, "setQuizLink")}

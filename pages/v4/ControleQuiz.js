@@ -3,7 +3,6 @@ import {
   VisibilityOff,
   VisibilityOffRounded,
 } from "@mui/icons-material";
-import GetColor from "./GetColor";
 import { setCenterBackgroundColor } from "../../store/stylizationSlice";
 
 import FormQrControll from "./FormQrControll";
@@ -18,7 +17,7 @@ export default ({
   qrcodeColor,
   fnQrcodeColor,
   textColor,
-  fnTextoColor,
+  fnTextColor,
   title,
   fnTitle,
   subtitle,
@@ -40,7 +39,7 @@ export default ({
       qrcodeColor={qrcodeColor}
       fnQrcodeColor={fnQrcodeColor}
       textColor={textColor}
-      fnTextoColor={fnTextoColor}
+      fnTextColor={fnTextColor}
       title={title}
       fnTitle={fnTitle}
       subtitle={subtitle}

@@ -1,5 +1,6 @@
 import Qrplace from "./Qrplace";
 import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
 
 import {
   setQuizTextSize,
@@ -16,6 +17,7 @@ import {
 } from "../../store/qrcodeSlice";
 
 import { useEffect } from "react";
+import logoImage from "../../public/v2/src/images/logo.png";
 
 export default ({ show }) => {
   const dispatch = useDispatch();
@@ -27,6 +29,12 @@ export default ({ show }) => {
   const showImage = useSelector((state) => state.qrcode.quizShowImage);
   const showText = useSelector((state) => state.qrcode.quizShowText);
   const showQr = useSelector((state) => state.qrcode.quizShowQrcode);
+  const textSize = useSelector((state) => state.qrcode.quizTextSize);
+  const imageSize = useSelector((state) => state.qrcode.quizImageSize);
+  const qrcodeSize = useSelector((state) => state.qrcode.quizQrcodeSize);
+  const colorDark = useSelector((state) => state.qrcode.quizQrcodeColor);
+  const textColor = useSelector((state) => state.qrcode.quizTextColor);
+  const qrcodeColor = useSelector((state) => state.qrcode.quizQrcodeColor);
 
   const methods = {
     setQuizTitle: {
@@ -106,6 +114,13 @@ export default ({ show }) => {
       title={title}
       subtitle={subtitle}
       link={link}
+      textSize={textSize}
+      img={logoImage}
+      imageSize={imageSize}
+      colorDark={colorDark}
+      qrcodeSize={qrcodeSize}
+      textColor={textColor}
+      qrcodeColor={qrcodeColor}
     />
   );
 };

@@ -15,6 +15,7 @@ import {
   setShowLeftPlace,
 } from "../../store/booleansSlice";
 import Quiz from "./Quiz";
+import Visitantes from "./Visitantes";
 
 export default () => {
   const dispatch = useDispatch();
@@ -107,6 +108,7 @@ export default () => {
       </div>
       <div className="leftSideBar">
         <Quiz show={showQuizLeftPlace} />
+        <Visitantes show={setShowVisitantesLeftPlace} />
       </div>
     </>
   );

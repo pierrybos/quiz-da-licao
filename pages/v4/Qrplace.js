@@ -1,4 +1,8 @@
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 import Head from "next/head";
+import Image from "next/image";
+import Qrcode from "../../src/components/Qrcode";
+import QrcodeComponent from "../../src/components/QrcodeComponent";
 
 export default ({
   show,
@@ -8,6 +12,14 @@ export default ({
   title,
   subtitle,
   link,
+  textSize,
+  img,
+  imageSize,
+  qrcodeSize,
+  colorDark,
+  quizSize,
+  textColor,
+  qrcodeColor,
 }) => {
   return (
     <>
@@ -20,7 +32,12 @@ export default ({
               }
               .textSide{
                 display: ${showText ? "block !important" : "none !important"};
+                font-size: ${textSize}em;
+                color: rgba(${textColor.r},${textColor.g},${textColor.b},${
+              textColor.a
+            });
               }
+              .textSide * { margin: 0; } 
               .imageSide{
                 display: ${showImage ? "block !important" : "none !important"};
               }
@@ -42,9 +59,20 @@ export default ({
       @TODO: make timer and visitantes files
       */}
       <div className="qrPlace">
-        <div className="textSide">{title}</div>
-        <div className="imageSide">{subtitle}</div>
-        <div className="qrSide">{link}</div>
+        <div className="textSide">
+          <h3>{title}</h3>
+          <p>{subtitle}</p>
+        </div>
+        <div className="imageSide">
+          <Image src={img} width={imageSize} />
+        </div>
+        <div className="qrSide">
+          <QrcodeComponent
+            url={link}
+            colorDark={qrcodeColor}
+            quizSize={qrcodeSize}
+          />
+        </div>
       </div>
     </>
   );

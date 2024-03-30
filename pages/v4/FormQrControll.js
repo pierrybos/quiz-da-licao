@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 
 import ToogleQRElement from "./ToogleQRElement";
+import GetColor from "./GetColor";
 
 const styles = {
   position: "absolute",
@@ -40,7 +41,7 @@ export default ({
   qrcodeColor,
   fnQrcodeColor,
   textColor,
-  fnTextoColor,
+  fnTextColor,
   title,
   fnTitle,
   subtitle,
@@ -56,12 +57,18 @@ export default ({
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12}>
           <label>Tamanho da texto</label>
-          <Slider value={textSize} onChange={fnTextSize} min={1} max={100} />
+          <Slider
+            value={textSize}
+            onChange={fnTextSize}
+            step={0.1}
+            min={0.1}
+            max={10}
+          />
         </Grid>
 
         <Grid item xs={12} sm={12}>
           <label>Tamanho da imagem</label>
-          <Slider value={imageSize} onChange={fnImagemSize} min={0} max={100} />
+          <Slider value={imageSize} onChange={fnImagemSize} min={0} max={900} />
         </Grid>
 
         <Grid item xs={12} sm={12}>
@@ -70,21 +77,16 @@ export default ({
             value={qrcodeSize}
             onChange={fnQrcodeSize}
             min={0}
-            max={100}
+            max={900}
           />
         </Grid>
         <Grid item xs={6} sm={6}>
           <label>cor do QrCode</label>
-          <Slider
-            value={qrcodeColor}
-            onChange={fnQrcodeColor}
-            min={0}
-            max={100}
-          />
+          <GetColor definedColor={qrcodeColor} fnDefinedColor={fnQrcodeColor} />
         </Grid>
         <Grid item xs={6} sm={6}>
           <label>cor do texto</label>
-          <Slider value={textColor} onChange={fnTextoColor} min={0} max={100} />
+          <GetColor definedColor={textColor} fnDefinedColor={fnTextColor} />
         </Grid>
         <Grid item xs={12} sm={12}>
           <TextField
