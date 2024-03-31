@@ -13,6 +13,7 @@ import {
   setShowVisitantesLeftPlace,
   setShowTimerLeftPlace,
   setShowLeftPlace,
+  setShowQuizRightPlace,
 } from "../../store/booleansSlice";
 import Quiz from "./Quiz";
 import Visitantes from "./Visitantes";
@@ -96,7 +97,7 @@ export default () => {
   top: ${leftSideBarMarginTop}%;
   padding: 30px;
   min-height: 100px; /* Ajuste conforme necessário */
-  width: ${leftSideBarWidth}%; /* Ajuste conforme necessário */
+  min-width: ${leftSideBarWidth}%; /* Ajuste conforme necessário */
   background-color: rgba(${leftBackgroundColor.r}, ${leftBackgroundColor.g}, ${
               leftBackgroundColor.b
             }, ${leftBackgroundColor.a}); 

@@ -111,7 +111,9 @@ export default () => {
 
   function dispatchUpdate(ev, methodName) {
     {
-      console.log("dispatchUpdate");
+      if (!methodName) {
+        throw new Error("methodName is required");
+      }
       console.log(methodName);
       console.log(ev.target.value);
       console.log(ev.target);

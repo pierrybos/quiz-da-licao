@@ -22,6 +22,7 @@ const initialState = {
   showTimerLeftPlace: false,
   leftSideBarWidth: 0,
   leftSideBarLeft: 0,
+  showRightPlace: false,
   showQuizRightPlace: false,
   showVisitantesRightPlace: false,
   showTimerRightPlace: false,
