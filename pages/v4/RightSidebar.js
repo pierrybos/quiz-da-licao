@@ -2,6 +2,9 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import Quiz from "./Quiz";
+import Visitantes from "./Visitantes";
+
 import {
   setRightSideBarWidth,
   setRightSideBarMarginTop,
@@ -34,6 +37,12 @@ export default () => {
     (state) => state.stylization.rightSideBarRight
   );
   const showRightPlace = useSelector((state) => state.booleans.showRightPlace);
+  const showQuizRightPlace = useSelector(
+    (state) => state.booleans.showQuizRightPlace
+  );
+  const showVisitantesRightPlace = useSelector(
+    (state) => state.booleans.showVisitantesRightPlace
+  );
 
   const methods = {
     setRightSideBarMarginTop: {
@@ -91,7 +100,7 @@ export default () => {
   top: ${rightSideBarMarginTop}%;
   padding: 30px;
   min-height: 100px; /* Ajuste conforme necessário */
-  width: ${rightSideBarWidth}%; /* Ajuste conforme necessário */
+  min-width: ${rightSideBarWidth}%; /* Ajuste conforme necessário */
   background-color: rgba(${rightBackgroundColor.r}, ${
               rightBackgroundColor.g
             }, ${rightBackgroundColor.b}, ${rightBackgroundColor.a}); 
@@ -102,7 +111,10 @@ export default () => {
           </style>
         </Head>
       </div>
-      <div className="rightSideBar"></div>
+      <div className="rightSideBar">
+        <Quiz show={showQuizRightPlace} />
+        <Visitantes show={showVisitantesRightPlace} />
+      </div>
     </>
   );
 };

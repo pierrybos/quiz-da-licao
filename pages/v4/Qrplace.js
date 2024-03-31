@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Qrcode from "../../src/components/Qrcode";
 import QrcodeComponent from "../../src/components/QrcodeComponent";
+import TextComponent from "./TextComponent";
 
 export default ({
   show,
@@ -30,20 +31,8 @@ export default ({
               .qrPlace{
                 display: ${show ? "block !important" : "none !important"};
               }
-              .textSide{
-                display: ${showText ? "block !important" : "none !important"};
-                font-size: ${textSize}em;
-                color: rgba(${textColor.r},${textColor.g},${textColor.b},${
-              textColor.a
-            });
-              }
               .textSide * { margin: 0; } 
-              .imageSide{
-                display: ${showImage ? "block !important" : "none !important"};
-              }
-              .qrSide{
-                display: ${showQr ? "block !important" : "none !important"};
-              }
+
               `}
           </style>
         </Head>
@@ -58,15 +47,31 @@ export default ({
       @TODO: add styles based the redux variabels
       @TODO: make timer and visitantes files
       */}
-      <div className="qrPlace">
-        <div className="textSide">
-          <h3>{title}</h3>
-          <p>{subtitle}</p>
-        </div>
-        <div className="imageSide">
+      <div
+        className="qrPlace"
+        style={{ display: `${show ? "block" : "none"}` }}
+      >
+        <TextComponent
+          title={title}
+          showText={showText}
+          textSize={textSize}
+          textColor={textColor}
+          subtitle={subtitle}
+        />
+        <div
+          className="imageSide"
+          style={{
+            display: `${showImage ? "block" : "none"}`,
+          }}
+        >
           <Image src={img} width={imageSize} />
         </div>
-        <div className="qrSide">
+        <div
+          className="qrSide"
+          style={{
+            display: `${showQr ? "block" : "none"}`,
+          }}
+        >
           <QrcodeComponent
             url={link}
             colorDark={qrcodeColor}

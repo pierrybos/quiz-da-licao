@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TitleIcon from "@mui/icons-material/Title";
 import ImageIcon from "@mui/icons-material/Image";
 import QrCodeIcon from "@mui/icons-material/QrCode";
@@ -12,12 +12,63 @@ export default ({
   qrcode,
   fnShowQrcode,
 }) => {
-  const [formats, setFormats] = useState(() => []);
+  const [formats, setFormats] = useState(() => {
+    const initialFormats = [];
+    if (titulo) initialFormats.push("titulo");
+    if (imagem) initialFormats.push("imagem");
+    if (qrcode) initialFormats.push("qrcode");
+    return initialFormats;
+  });
+
+  useEffect(() => {
+    setFormats(() => {
+      const initialFormats = [];
+      if (titulo) initialFormats.push("titulo");
+      if (imagem) initialFormats.push("imagem");
+      if (qrcode) initialFormats.push("qrcode");
+      return initialFormats;
+    });
+  }, [titulo, imagem, qrcode]);
+
+  /*
+
+ @TODO: refatorar abaixo com o comentado aqui
+  const atributos = {
+    quiz: {
+      name: "quiz",
+      fn: fnQuiz,
+    },
+    visitantes: {
+      name: "visitantes",
+      fn: fnVisitantes,
+    },
+    timer: {
+      name: "timer",
+      fn: fnTimer,
+    },
+    display: {
+      name: "display",
+      fn: fnDisplay,
+    },
+  };
+
+  const handleFormat = (event, newFormats) => {
+    let targetValue = event.target.value || event.target.dataset.name;
+    atributos[targetValue].fn({
+      target: {
+        value: newFormats.indexOf(targetValue) > -1,
+      },
+    });
+    setFormats(newFormats);
+  };
+*/
+
   const atributos = {
     titulo: "titulo",
     imagem: "imagem",
     qrcode: "qrcode",
   };
+
   const handleFormat = (event, newFormats) => {
     fnShowText({
       target: {

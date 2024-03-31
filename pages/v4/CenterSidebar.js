@@ -2,6 +2,10 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import Quiz from "./Quiz";
+import Visitantes from "./Visitantes";
+import Timer from "./Timer";
+
 import {
   setCenterSideBarWidth,
   setCenterSideBarMarginTop,
@@ -35,6 +39,18 @@ export default () => {
   );
   const showCenterPlace = useSelector(
     (state) => state.booleans.showCenterPlace
+  );
+
+  const showQuizCenterPlace = useSelector(
+    (state) => state.booleans.showQuizCenterPlace
+  );
+
+  const showVisitantesCenterPlace = useSelector(
+    (state) => state.booleans.showVisitantesCenterPlace
+  );
+
+  const showTimerCenterPlace = useSelector(
+    (state) => state.booleans.showTimerCenterPlace
   );
 
   const methods = {
@@ -103,7 +119,11 @@ export default () => {
           </style>
         </Head>
       </div>
-      <div className="centerSideBar"></div>
+      <div className="centerSideBar">
+        <Quiz show={showQuizCenterPlace} />
+        <Visitantes show={showVisitantesCenterPlace} />
+        <Timer show={showTimerCenterPlace} />
+      </div>
     </>
   );
 };
