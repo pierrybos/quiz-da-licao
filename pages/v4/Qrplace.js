@@ -17,8 +17,6 @@ export default ({
   img,
   imageSize,
   qrcodeSize,
-  colorDark,
-  quizSize,
   textColor,
   qrcodeColor,
 }) => {
@@ -28,11 +26,7 @@ export default ({
         <Head>
           <style>
             {`
-              .qrPlace{
-                display: ${show ? "block !important" : "none !important"};
-              }
               .textSide * { margin: 0; } 
-
               `}
           </style>
         </Head>

@@ -54,12 +54,14 @@ export default ({
 
   const handleFormat = (event, newFormats) => {
     let targetValue = event.target.value || event.target.dataset.name;
-    atributos[targetValue].fn({
-      target: {
-        value: newFormats.indexOf(targetValue) > -1,
-      },
-    });
-    setFormats(newFormats);
+    if (targetValue !== undefined) {
+      atributos[targetValue].fn({
+        target: {
+          value: newFormats.indexOf(targetValue) > -1,
+        },
+      });
+      setFormats(newFormats);
+    }
   };
 
   return (

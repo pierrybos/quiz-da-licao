@@ -1,26 +1,13 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import {
-  setLeftSideBarWidth,
-  setLeftSideBarMarginTop,
-  setLeftBackgroundColor,
-  setLeftSideBarLeft,
-} from "../../store/stylizationSlice";
-import {
-  setShowQuizLeftPlace,
-  setShowVisitantesLeftPlace,
-  setShowTimerLeftPlace,
-  setShowLeftPlace,
-  setShowQuizRightPlace,
-} from "../../store/booleansSlice";
 import Quiz from "./Quiz";
 import Visitantes from "./Visitantes";
 
+import { useAppState } from "./stateService";
+
 export default () => {
-  const dispatch = useDispatch();
-  const channel = new BroadcastChannel("semanaSanta");
+  const { dispatchUpdate } = useAppState(); // Use o hook personalizado
   const leftSideBarMarginTop = useSelector(
     (state) => state.stylization.leftSideBarMarginTop
   );
@@ -40,51 +27,10 @@ export default () => {
   const showQuizLeftPlace = useSelector(
     (state) => state.booleans.showQuizLeftPlace
   );
+  const showVisitantesLeftPlace = useSelector(
+    (state) => state.booleans.showVisitantesLeftPlace
+  );
 
-  const methods = {
-    setLeftSideBarMarginTop: {
-      fn: setLeftSideBarMarginTop,
-    },
-    setLeftSideBarWidth: {
-      fn: setLeftSideBarWidth,
-    },
-    setLeftBackgroundColor: {
-      fn: setLeftBackgroundColor,
-    },
-    setLeftSideBarLeft: {
-      fn: setLeftSideBarLeft,
-    },
-    setShowLeftPlace: {
-      fn: setShowLeftPlace,
-    },
-    setShowQuizLeftPlace: {
-      fn: setShowQuizLeftPlace,
-    },
-    setShowVisitantesLeftPlace: {
-      fn: setShowVisitantesLeftPlace,
-    },
-    setShowTimerLeftPlace: {
-      fn: setShowTimerLeftPlace,
-    },
-  };
-
-  useEffect(() => {
-    channel.onmessage = (ev) => {
-      if (methods[ev.data.id]) {
-        if (methods[ev.data.id].noredux == true) {
-          methods[ev.data.id].fn(ev.data.content);
-        } else {
-          dispatch(methods[ev.data.id].fn(ev.data.content));
-        }
-      } else {
-        console.log("Método não encontrado:", ev.data);
-      }
-    };
-
-    return () => {
-      channel.close();
-    };
-  }, [channel]);
   return (
     <>
       <div>
@@ -109,7 +55,7 @@ export default () => {
       </div>
       <div className="leftSideBar">
         <Quiz show={showQuizLeftPlace} />
-        <Visitantes show={setShowVisitantesLeftPlace} />
+        <Visitantes show={showVisitantesLeftPlace} />
       </div>
     </>
   );

@@ -20,23 +20,10 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
-import {
-  setLeftSideBarWidth,
-  setLeftSideBarMarginTop,
-  setLeftBackgroundColor,
-  setLeftSideBarLeft,
-} from "../../store/stylizationSlice";
-import {
-  setShowQuizLeftPlace,
-  setShowVisitantesLeftPlace,
-  setShowTimerLeftPlace,
-  setShowLeftPlace,
-} from "../../store/booleansSlice";
+import { useAppState } from "./stateService";
 
 export default () => {
-  const dispatch = useDispatch();
-  const channel = new BroadcastChannel("semanaSanta");
+  const { dispatchUpdate } = useAppState(); // Use o hook personalizado
 
   const [editComponent, setEditComponent] = useState(false);
   const handleOpen = () => setEditComponent(true);
@@ -68,63 +55,10 @@ export default () => {
     (state) => state.stylization.leftBackgroundColor
   );
 
-  const methods = {
-    setLeftSideBarWidth: {
-      fn: setLeftSideBarWidth,
-    },
-    setLeftSideBarMarginTop: {
-      fn: setLeftSideBarMarginTop,
-    },
-    setLeftBackgroundColor: {
-      fn: setLeftBackgroundColor,
-    },
-    setLeftSideBarLeft: {
-      fn: setLeftSideBarLeft,
-    },
-    setShowLeftPlace: {
-      fn: setShowLeftPlace,
-    },
-    setShowQuizLeftPlace: {
-      fn: setShowQuizLeftPlace,
-    },
-    setShowVisitantesLeftPlace: {
-      fn: setShowVisitantesLeftPlace,
-    },
-    setShowTimerLeftPlace: {
-      fn: setShowTimerLeftPlace,
-    },
-  };
-
-  function dispatchUpdate(ev, methodName) {
-    {
-      console.log("dispatchUpdate");
-      console.log(methodName);
-      console.log(ev.target.value);
-      console.log(ev.target);
-      console.log(methods);
-      console.log(methods[methodName]);
-      dispatch(methods[methodName].fn(ev.target.value));
-      const message = {
-        id: methodName,
-        content: ev.target.value,
-      };
-      channel.postMessage(message);
-    }
-  }
-
   return (
     <>
       <div>
-        <Head>
-          <style>
-            {`
-.leftSideBar {
-  left: 0;
-  background-color: blue; /* Altere a cor conforme desejado */
-}
-              `}
-          </style>
-        </Head>
+        <Head></Head>
       </div>
       <div className="sideBar leftSideBar">
         <IconButton

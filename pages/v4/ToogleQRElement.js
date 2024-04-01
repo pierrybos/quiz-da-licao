@@ -30,65 +30,32 @@ export default ({
     });
   }, [titulo, imagem, qrcode]);
 
-  /*
-
- @TODO: refatorar abaixo com o comentado aqui
   const atributos = {
-    quiz: {
-      name: "quiz",
-      fn: fnQuiz,
+    titulo: {
+      name: "titulo",
+      fn: fnShowText,
     },
-    visitantes: {
-      name: "visitantes",
-      fn: fnVisitantes,
+    imagem: {
+      name: "imagem",
+      fn: fnShowImage,
     },
-    timer: {
-      name: "timer",
-      fn: fnTimer,
-    },
-    display: {
-      name: "display",
-      fn: fnDisplay,
+    qrcode: {
+      name: "qrcode",
+      fn: fnShowQrcode,
     },
   };
 
   const handleFormat = (event, newFormats) => {
     let targetValue = event.target.value || event.target.dataset.name;
-    atributos[targetValue].fn({
-      target: {
-        value: newFormats.indexOf(targetValue) > -1,
-      },
-    });
-    setFormats(newFormats);
-  };
-*/
 
-  const atributos = {
-    titulo: "titulo",
-    imagem: "imagem",
-    qrcode: "qrcode",
-  };
-
-  const handleFormat = (event, newFormats) => {
-    fnShowText({
-      target: {
-        value: newFormats.indexOf(atributos.titulo) !== -1,
-      },
-    });
-
-    fnShowImage({
-      target: {
-        value: newFormats.indexOf(atributos.imagem) !== -1,
-      },
-    });
-
-    fnShowQrcode({
-      target: {
-        value: newFormats.indexOf(atributos.qrcode) !== -1,
-      },
-    });
-
-    setFormats(newFormats);
+    if (targetValue) {
+      atributos[targetValue].fn({
+        target: {
+          value: newFormats.indexOf(targetValue) > -1,
+        },
+      });
+      setFormats(newFormats);
+    }
   };
   return (
     <>
@@ -97,14 +64,14 @@ export default ({
         onChange={handleFormat}
         aria-label="text formatting"
       >
-        <ToggleButton value={atributos.titulo} aria-label="Título">
-          <TitleIcon />
+        <ToggleButton value={atributos.titulo.name} aria-label="Título">
+          <TitleIcon data-name={atributos.titulo.name} />
         </ToggleButton>
-        <ToggleButton value={atributos.imagem} aria-label="Imagem">
-          <ImageIcon />
+        <ToggleButton value={atributos.imagem.name} aria-label="Imagem">
+          <ImageIcon data-name={atributos.imagem.name} />
         </ToggleButton>
-        <ToggleButton value={atributos.qrcode} aria-label="QrCode">
-          <QrCodeIcon />
+        <ToggleButton value={atributos.qrcode.name} aria-label="QrCode">
+          <QrCodeIcon data-name={atributos.qrcode.name} />
         </ToggleButton>
       </ToggleButtonGroup>
     </>

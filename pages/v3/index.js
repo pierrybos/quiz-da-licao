@@ -744,7 +744,7 @@ export default () => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <label>Tamanho Texto Título Quiz</label>
+              <label>Tamanho Texto ???Título Quiz</label>
               <Slider
                 value={quizTextSize}
                 onChange={(e) => dispatchUpdate(e, "setQuizTextSize")}
