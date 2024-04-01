@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import ToogleQRElement from "./ToogleQRElement";
 import ControleQuiz from "./ControleQuiz";
+import { useAppState } from "./stateService";
 
 import {
   setQuizTextSize,
@@ -22,8 +23,7 @@ import {
 } from "../../store/qrcodeSlice";
 
 export default () => {
-  const dispatch = useDispatch();
-  const channel = new BroadcastChannel("semanaSanta");
+  const { dispatchUpdate } = useAppState(); // Use o hook personalizado
 
   const [editComponent, setEditComponent] = useState(false);
   const handleOpen = () => setEditComponent(true);
@@ -37,58 +37,6 @@ export default () => {
   const quizTextColor = useSelector((state) => state.qrcode.quizTextColor);
   const quizLink = useSelector((state) => state.qrcode.quizLink);
 
-  const methods = {
-    setQuizTitle: {
-      fn: setQuizTitle,
-    },
-    setQuizSubtitle: {
-      fn: setQuizSubtitle,
-    },
-    setQuizTextSize: {
-      fn: setQuizTextSize,
-    },
-    setQuizImageSize: {
-      fn: setQuizImageSize,
-    },
-    setQuizQrcodeSize: {
-      fn: setQuizQrcodeSize,
-    },
-    setQuizColor: {
-      fn: setQuizColor,
-    },
-    setQuizTextColor: {
-      fn: setQuizTextColor,
-    },
-    setQuizLink: {
-      fn: setQuizLink,
-    },
-    setQuizShowQrcode: {
-      fn: setQuizShowQrcode,
-    },
-    setQuizShowImage: {
-      fn: setQuizShowImage,
-    },
-    setQuizShowText: {
-      fn: setQuizShowText,
-    },
-  };
-
-  function dispatchUpdate(ev, methodName) {
-    {
-      console.log("dispatchUpdate");
-      console.log(methodName);
-      console.log(ev.target.value);
-      console.log(ev.target);
-      console.log(methods);
-      console.log(methods[methodName]);
-      dispatch(methods[methodName].fn(ev.target.value));
-      const message = {
-        id: methodName,
-        content: ev.target.value,
-      };
-      channel.postMessage(message);
-    }
-  }
   return (
     <>
       <div>

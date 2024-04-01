@@ -8,6 +8,7 @@ import Modal from "@mui/material/Modal";
 
 import ToogleElemento from "./ToogleElemento";
 import Controle from "./Controle";
+import { useAppState } from "./stateService";
 
 const style = {
   position: "absolute",
@@ -35,8 +36,7 @@ import {
 } from "../../store/booleansSlice";
 
 export default () => {
-  const dispatch = useDispatch();
-  const channel = new BroadcastChannel("semanaSanta");
+  const { dispatchUpdate } = useAppState(); // Use o hook personalizado
 
   const [editComponent, setEditComponent] = useState(false);
   const handleOpen = () => setEditComponent(true);
@@ -67,50 +67,6 @@ export default () => {
   const rightBackgroundColor = useSelector(
     (state) => state.stylization.rightBackgroundColor
   );
-
-  const methods = {
-    setRightSideBarWidth: {
-      fn: setRightSideBarWidth,
-    },
-    setRightSideBarMarginTop: {
-      fn: setRightSideBarMarginTop,
-    },
-    setRightBackgroundColor: {
-      fn: setRightBackgroundColor,
-    },
-    setRightSideBarRight: {
-      fn: setRightSideBarRight,
-    },
-    setShowRightPlace: {
-      fn: setShowRightPlace,
-    },
-    setShowQuizRightPlace: {
-      fn: setShowQuizRightPlace,
-    },
-    setShowVisitantesRightPlace: {
-      fn: setShowVisitantesRightPlace,
-    },
-    setShowTimerRightPlace: {
-      fn: setShowTimerRightPlace,
-    },
-  };
-
-  function dispatchUpdate(ev, methodName) {
-    {
-      console.log("dispatchUpdate");
-      console.log(methodName);
-      console.log(ev.target.value);
-      console.log(ev.target);
-      console.log(methods);
-      console.log(methods[methodName]);
-      dispatch(methods[methodName].fn(ev.target.value));
-      const message = {
-        id: methodName,
-        content: ev.target.value,
-      };
-      channel.postMessage(message);
-    }
-  }
 
   return (
     <>

@@ -4,6 +4,7 @@ import Modal from "@mui/material/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { Edit } from "@mui/icons-material";
 import { useState } from "react";
+import { useAppState } from "./stateService";
 
 import {
   setShowQuizCenterPlace,
@@ -11,13 +12,6 @@ import {
   setShowTimerCenterPlace,
   setShowCenterPlace,
 } from "../../store/booleansSlice";
-
-import {
-  setCenterSideBarWidth,
-  setCenterSideBarMarginTop,
-  setCenterBackgroundColor,
-  setCenterSideBarLeft,
-} from "../../store/stylizationSlice";
 
 import ToogleElemento from "./ToogleElemento";
 import Controle from "./Controle";
@@ -35,8 +29,7 @@ const style = {
 };
 
 export default () => {
-  const dispatch = useDispatch();
-  const channel = new BroadcastChannel("semanaSanta");
+  const { dispatchUpdate } = useAppState(); // Use o hook personalizado
 
   const [editComponent, setEditComponent] = useState(false);
   const handleOpen = () => setEditComponent(true);
@@ -81,52 +74,6 @@ export default () => {
     dispatch(setShowTimerCenterPlace(newFormats.indexOf("timer") !== -1));
     setFormats(newFormats);
   };
-
-  const methods = {
-    setCenterSideBarWidth: {
-      fn: setCenterSideBarWidth,
-    },
-    setCenterSideBarMarginTop: {
-      fn: setCenterSideBarMarginTop,
-    },
-    setCenterBackgroundColor: {
-      fn: setCenterBackgroundColor,
-    },
-    setCenterSideBarLeft: {
-      fn: setCenterSideBarLeft,
-    },
-    setShowCenterPlace: {
-      fn: setShowCenterPlace,
-    },
-    setShowQuizCenterPlace: {
-      fn: setShowQuizCenterPlace,
-    },
-    setShowVisitantesCenterPlace: {
-      fn: setShowVisitantesCenterPlace,
-    },
-    setShowTimerCenterPlace: {
-      fn: setShowTimerCenterPlace,
-    },
-  };
-
-  function dispatchUpdate(ev, methodName) {
-    {
-      if (!methodName) {
-        throw new Error("methodName is required");
-      }
-      console.log(methodName);
-      console.log(ev.target.value);
-      console.log(ev.target);
-      console.log(methods);
-      console.log(methods[methodName]);
-      dispatch(methods[methodName].fn(ev.target.value));
-      const message = {
-        id: methodName,
-        content: ev.target.value,
-      };
-      channel.postMessage(message);
-    }
-  }
 
   return (
     <>
