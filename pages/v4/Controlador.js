@@ -7,6 +7,7 @@ import RightControllSidebar from "./RightControllSidebar";
 import QuizControll from "./QuizControll";
 import VisitantesControll from "./VisitantesControll";
 import TimerControll from "./TimerControll";
+import ImageBackground from "./ImagemBackground";
 
 export default () => {
   return (
@@ -33,6 +34,7 @@ export default () => {
                 border-radius: 5px; /* Arredonda as bordas */
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra */
                 padding: 20px;
+                background-color: rgba(99, 99, 99, 0.8);                
                 margin-bottom: 20px; /* Adiciona espaçamento entre os itens */
               }
               `}
@@ -91,6 +93,9 @@ export default () => {
               </Typography>
               <VisitantesControll />
             </div>
+          </Grid>
+          <Grid item xs={4}>
+            <ImageBackground />
           </Grid>
         </Grid>
       </div>
