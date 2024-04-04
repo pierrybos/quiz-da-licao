@@ -58,6 +58,7 @@ export default () => {
   const leftSideBarTopPosition = useSelector(
     (state) => state.stylization.leftSideBarTopPosition
   );
+  //                 background-image: url("/v2/src/images/fundoSemanaSanta.png") !important;
 
   return (
     <>
@@ -68,7 +69,7 @@ export default () => {
               body {
                 margin: 0 !important;
                 padding: 0 !important;
-                background-image: url("/v2/src/images/fundoSemanaSanta.png") !important;
+                background-image: url("/fundo.png") !important;
                 background-size: cover !important;
                 background-position: center !important;
                 background-attachment: fixed !important;

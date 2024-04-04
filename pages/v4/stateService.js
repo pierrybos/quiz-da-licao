@@ -6,7 +6,6 @@ import {
   setVisitanteColor,
   setVisitanteQrSize,
   setVisitanteTextSize,
-  setTimerTextColor,
   setFontSizeTimerPlace,
   setLeftSideBarWidth,
   setLeftSideBarPosition,
@@ -24,14 +23,13 @@ import {
   setRightSideBarMarginTop,
   setRightSideBarRight,
   setRightSideBarWidth,
+  setBackgroundImage,
 } from "../../store/stylizationSlice";
 import {
-  setShowTimer,
   setShowLogoQuiz,
   setShowBothQr,
   setShowLogoVisitantes,
   setShowTextoQuiz,
-  setAudioEnable,
   setShowQRCodeQuiz,
   setShowQRCodeVisitantes,
   setShowTextoVisitantes,
@@ -92,6 +90,18 @@ import {
   setVisitantesShowImage,
 } from "../../store/qrcodeSlice";
 
+import {
+  setLimitTime,
+  setShowTimer,
+  setAudioEnable,
+  setTimerTextSize,
+  setTimerTextColor,
+  setTimerTitle,
+  setTimerSubtitle,
+  setTimerTitleRemain,
+  setTimerSubtitleRemain,
+} from "../../store/timerSlice";
+
 export const useAppState = () => {
   const dispatch = useDispatch();
   const channel = new BroadcastChannel("semanaSanta");
@@ -100,17 +110,28 @@ export const useAppState = () => {
     setQuizQrSize: {
       fn: setQuizQrSize,
     },
+    setLimitTime: { fn: setLimitTime },
     setVisitanteColor: {
       fn: setVisitanteColor,
+    },
+    setTimerTitle: { fn: setTimerTitle },
+    setTimerSubtitle: { fn: setTimerSubtitle },
+    setTimerTitleRemain: { fn: setTimerTitleRemain },
+    setTimerSubtitleRemain: { fn: setTimerSubtitleRemain },
+    setTimerTextColor: {
+      fn: setTimerTextColor,
     },
     setVisitanteQrSize: {
       fn: setVisitanteQrSize,
     },
+    setBackgroundImage: {
+      fn: setBackgroundImage,
+    },
+    setTimerTextSize: {
+      fn: setTimerTextSize,
+    },
     setVisitanteTextSize: {
       fn: setVisitanteTextSize,
-    },
-    setTimerTextColor: {
-      fn: setTimerTextColor,
     },
     setFontSizeTimerPlace: {
       fn: setFontSizeTimerPlace,

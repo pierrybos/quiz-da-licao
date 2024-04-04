@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import Quiz from "./Quiz";
 import Visitantes from "./Visitantes";
+import Timer from "./Timer";
 
 import { useAppState } from "./stateService";
 
@@ -31,6 +32,10 @@ export default () => {
     (state) => state.booleans.showVisitantesLeftPlace
   );
 
+  const showTimerLeftPlace = useSelector(
+    (state) => state.booleans.showTimerLeftPlace
+  );
+
   return (
     <>
       <div>
@@ -42,6 +47,7 @@ export default () => {
   position: absolute;
   top: ${leftSideBarMarginTop}%;
   padding: 30px;
+  border-radius: 50px;
   min-height: 100px; /* Ajuste conforme necessário */
   min-width: ${leftSideBarWidth}%; /* Ajuste conforme necessário */
   background-color: rgba(${leftBackgroundColor.r}, ${leftBackgroundColor.g}, ${
@@ -56,6 +62,7 @@ export default () => {
       <div className="leftSideBar">
         <Quiz show={showQuizLeftPlace} />
         <Visitantes show={showVisitantesLeftPlace} />
+        <Timer show={showTimerLeftPlace} />
       </div>
     </>
   );
