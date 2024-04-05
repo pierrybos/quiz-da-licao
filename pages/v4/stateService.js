@@ -102,7 +102,7 @@ import {
   setTimerSubtitleRemain,
 } from "../../store/timerSlice";
 
-export default useAppState = () => {
+export const useAppState = () => {
   const dispatch = useDispatch();
   const channel = new BroadcastChannel("semanaSanta");
 
@@ -387,3 +387,5 @@ export default useAppState = () => {
     dispatchUpdate,
   };
 };
+
+export default useAppState;
