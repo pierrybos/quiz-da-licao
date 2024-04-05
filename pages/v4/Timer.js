@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import { useRouter } from "next/router";
 
-const Timer = function () {
+const Timer = function ({ show }) {
   const [controlls, setControlls] = useState(false);
   const [timeRemain, setTimeRemain] = useState("10h10m10s");
   const [beforeOff, setBeforeOff] = useState(true);
@@ -133,7 +133,7 @@ const Timer = function () {
 
   return (
     <div
-      className={showTimer ? "visible" : "hidden"}
+      className={showTimer && show ? "visible" : "hidden"}
       style={{
         fontSize: `${timerTextSize}em`,
         color: `rgba(${timerTextColor.r},${timerTextColor.g},${timerTextColor.b},${timerTextColor.a})`,

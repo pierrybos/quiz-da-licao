@@ -8,6 +8,7 @@ import QuizControll from "./QuizControll";
 import VisitantesControll from "./VisitantesControll";
 import TimerControll from "./TimerControll";
 import ImageBackground from "./ImagemBackground";
+import BodyControll from "./BodyControll";
 
 export default () => {
   return (
@@ -95,7 +96,12 @@ export default () => {
             </div>
           </Grid>
           <Grid item xs={4}>
-            <ImageBackground />
+            <div className="sidebarContainer">
+              <Typography variant="h6" gutterBottom>
+                Geral
+              </Typography>
+              <BodyControll />
+            </div>
           </Grid>
         </Grid>
       </div>

@@ -4,23 +4,9 @@ import { Edit } from "@mui/icons-material";
 import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
-import ToogleQRElement from "./ToogleQRElement";
 import ControleQuiz from "./ControleQuiz";
+import ToogleQRElement from "./ToogleQRElement";
 import { useAppState } from "./stateService";
-
-import {
-  setQuizTextSize,
-  setQuizImageSize,
-  setQuizQrcodeSize,
-  setQuizColor,
-  setQuizTextColor,
-  setQuizTitle,
-  setQuizSubtitle,
-  setQuizLink,
-  setQuizShowQrcode,
-  setQuizShowImage,
-  setQuizShowText,
-} from "../../store/qrcodeSlice";
 
 export default () => {
   const { dispatchUpdate } = useAppState(); // Use o hook personalizado
