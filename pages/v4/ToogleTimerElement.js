@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import PlayDisabledIcon from "@mui/icons-material/PlayDisabled";
-import { ToggleButtonGroup, ToggleButton } from "@mui/material";
+import { ToggleButton } from "@mui/material";
 import ReplayIcon from "@mui/icons-material/Replay";
 import Replay5Icon from "@mui/icons-material/Replay5";
 import Replay10Icon from "@mui/icons-material/Replay10";
 import Replay30Icon from "@mui/icons-material/Replay30";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PlayDisabledIcon from "@mui/icons-material/PlayDisabled";
+import ToggleButtonGroupWithOptions from "./ToggleButtonGroupWithOptions"; // Importando nosso componente
 
 export default ({
   fnPlusOne,
@@ -33,127 +34,52 @@ export default ({
     });
   }, [showTimer]);
 
-  const atributos = {
-    plusOne: {
+  const options = [
+    {
       name: "plusOne",
+      label: "plusOne",
+      icon: <ReplayIcon />,
       fn: fnPlusOne,
+      initialState: false,
     },
-    plusFive: {
+    {
       name: "plusFive",
+      label: "plusFive",
+      icon: <Replay5Icon />,
       fn: fnPlusFive,
+      initialState: false,
     },
-    plusTen: {
+    {
       name: "plusTen",
+      label: "plusTen",
+      icon: <Replay10Icon />,
       fn: fnPlusTen,
+      initialState: false,
     },
-    plusThirty: {
+    {
       name: "plusThirty",
+      label: "plusThirty",
+      icon: <Replay30Icon />,
       fn: fnPlusThirty,
+      initialState: false,
     },
-    audioEnable: {
-      name: "audioEnable",
-      fn: fnAudioEnable,
-    },
-    showTimer: {
+    {
       name: "showTimer",
-      fn: fnShowTimer,
+      label: "showTimer",
+      icon: showTimer ? <VisibilityIcon /> : <VisibilityOffIcon />,
+      fn: fnShowTimer, // TODO: timer está ficando false todas as vezes
+      initialState: showTimer,
     },
-  };
-
-  const handleIconClick = (iconFunction) => {
-    // Execute a função associada ao ícone
-    iconFunction();
-    // Adicione aqui qualquer outra lógica que você deseja executar quando o ícone é clicado
-  };
-
-  const handleFormat = (event, newFormats) => {
-    let targetValue = event.target.value || event.target.dataset.name;
-    if (targetValue !== undefined) {
-      atributos[targetValue].fn({
-        target: {
-          value: newFormats.indexOf(targetValue) > -1,
-        },
-      });
-      if (targetValue === atributos.showTimer.name) {
-        setFormats(newFormats);
-      }
-    }
-  };
+    {
+      name: "audioEnable",
+      label: "audioEnable",
+      icon: audioEnable ? <PlayArrowIcon /> : <PlayDisabledIcon />,
+      fn: fnAudioEnable,
+      initialState: audioEnable,
+    },
+  ];
 
   return (
-    <>
-      <ToggleButtonGroup
-        value={formats}
-        onChange={handleFormat}
-        aria-label="text formatting"
-      >
-        <ToggleButton
-          value={atributos.plusOne.name}
-          key="plusOne"
-          aria-label="plusOne"
-        >
-          <ReplayIcon onClick={() => handleIconClick(atributos.plusOne.fn)} />
-        </ToggleButton>
-        <ToggleButton
-          value={atributos.plusFive.name}
-          key="plusFive"
-          aria-label="plusFive"
-        >
-          <Replay5Icon onClick={() => handleIconClick(atributos.plusFive.fn)} />
-        </ToggleButton>
-        <ToggleButton
-          value={atributos.plusTen.name}
-          key="plusTen"
-          aria-label="plusTen"
-        >
-          <Replay10Icon onClick={() => handleIconClick(atributos.plusTen.fn)} />
-        </ToggleButton>
-        <ToggleButton
-          value={atributos.plusThirty.name}
-          key="plusThirty"
-          aria-label="plusThirty"
-        >
-          <Replay30Icon
-            onClick={() => handleIconClick(atributos.plusThirty.fn)}
-          />
-        </ToggleButton>
-        <ToggleButton
-          value={atributos.showTimer.name}
-          key="showTimer"
-          aria-label="showTimer"
-        >
-          {showTimer && (
-            <VisibilityIcon
-              data-name={atributos.showTimer.name}
-              onClick={() => handleIconClick(atributos.showTimer.fn)}
-            />
-          )}
-          {!showTimer && (
-            <VisibilityOffIcon
-              data-name={atributos.showTimer.name}
-              onClick={() => handleIconClick(atributos.showTimer.fn)}
-            />
-          )}
-        </ToggleButton>
-        <ToggleButton
-          value={atributos.audioEnable.name}
-          key="audioEnable"
-          aria-label="audioEnable"
-        >
-          {audioEnable && (
-            <PlayArrowIcon
-              data-name={atributos.audioEnable.name}
-              onClick={() => handleIconClick(atributos.audioEnable.fn)}
-            />
-          )}
-          {!audioEnable && (
-            <PlayDisabledIcon
-              data-name={atributos.audioEnable.name}
-              onClick={() => handleIconClick(atributos.audioEnable.fn)}
-            />
-          )}
-        </ToggleButton>
-      </ToggleButtonGroup>
-    </>
+    <ToggleButtonGroupWithOptions options={options} /> // Substituindo ToggleButtonGroup por ToggleButtonGroupWithOptions
   );
 };
