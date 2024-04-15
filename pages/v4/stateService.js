@@ -7,6 +7,7 @@ import * as qrcodeSlice from "../../store/qrcodeSlice";
 import * as timerSlice from "../../store/timerSlice";
 
 export const useAppState = () => {
+export const useAppState = () => {
   const dispatch = useDispatch();
   const channel = new BroadcastChannel("semanaSanta");
 
@@ -58,5 +59,7 @@ export const useAppState = () => {
     dispatchUpdate,
   };
 };
+
+export default useAppState;
 
 export default useAppState;
