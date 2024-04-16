@@ -31,17 +31,11 @@ export default () => {
         </Head>
       </div>
       <div>
-        <IconButton
-          className="handle left"
-          aria-label="Edit"
-          onClick={handleOpen}
-        >
-          <Edit />
-        </IconButton>
         <ToogleQRElement
           fnShowText={(e) => dispatchUpdate(e, "setQuizShowText")}
           fnShowImage={(e) => dispatchUpdate(e, "setQuizShowImage")}
           fnShowQrcode={(e) => dispatchUpdate(e, "setQuizShowQrcode")}
+          modalFn={handleOpen}
         />
       </div>
       <Modal

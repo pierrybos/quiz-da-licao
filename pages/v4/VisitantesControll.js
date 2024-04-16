@@ -39,17 +39,11 @@ export default () => {
     <>
       <div></div>
       <div className="visitantesControll">
-        <IconButton
-          className="handle left"
-          aria-label="Edit"
-          onClick={handleOpen}
-        >
-          <Edit />
-        </IconButton>
         <ToogleQRElement
           fnShowText={(e) => dispatchUpdate(e, "setVisitantesShowText")}
           fnShowImage={(e) => dispatchUpdate(e, "setVisitantesShowImage")}
           fnShowQrcode={(e) => dispatchUpdate(e, "setVisitantesShowQrcode")}
+          modalFn={handleOpen}
         />
       </div>
       <Modal

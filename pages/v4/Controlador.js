@@ -35,7 +35,7 @@ export default () => {
                 border-radius: 5px; /* Arredonda as bordas */
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra */
                 padding: 20px;
-                background-color: rgba(99, 99, 99, 0.8);                
+                background-color: rgba(225, 225, 225, 0.8);                
                 margin-bottom: 20px; /* Adiciona espaçamento entre os itens */
               }
               `}

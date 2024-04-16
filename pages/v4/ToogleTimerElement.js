@@ -8,7 +8,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PlayDisabledIcon from "@mui/icons-material/PlayDisabled";
-import ToggleButtonGroupWithOptions from "./ToggleButtonGroupWithOptions"; // Importando nosso componente
+import ButtonGroupWithOptions from "./ButtonGroupWithOptions";
 
 export default ({
   fnPlusOne,
@@ -19,6 +19,7 @@ export default ({
   audioEnable,
   fnAudioEnable,
   fnShowTimer,
+  modalFn,
 }) => {
   const [formats, setFormats] = useState(() => {
     const initialFormats = [];
@@ -80,6 +81,6 @@ export default ({
   ];
 
   return (
-    <ToggleButtonGroupWithOptions options={options} /> // Substituindo ToggleButtonGroup por ToggleButtonGroupWithOptions
+    <ButtonGroupWithOptions options={options} modal={modalFn} /> // Substituindo ToggleButtonGroup por ToggleButtonGroupWithOptions
   );
 };

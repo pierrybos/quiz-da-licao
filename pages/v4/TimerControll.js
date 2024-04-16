@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
-import { Edit } from "@mui/icons-material";
 
 import ToogleTimerElement from "./ToogleTimerElement";
 import { useAppState } from "./stateService";
@@ -60,13 +59,6 @@ export default () => {
 
   return (
     <>
-      <IconButton
-        className="handle left"
-        aria-label="Edit"
-        onClick={handleOpen}
-      >
-        <Edit />
-      </IconButton>
       <ToogleTimerElement
         fnPlusOne={handlePlusMinute}
         fnPlusFive={handlePlusFiveMinutes}
@@ -80,6 +72,7 @@ export default () => {
         fnAudioEnable={() =>
           dispatchUpdate({ target: { value: !audioEnable } }, "setAudioEnable")
         }
+        modalFn={handleOpen}
       />
       <Modal
         open={editComponent}

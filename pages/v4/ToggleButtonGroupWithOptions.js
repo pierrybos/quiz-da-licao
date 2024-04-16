@@ -23,15 +23,21 @@ const ToggleButtonGroupWithOptions = ({ options }) => {
   }, [options]);
 
   const handleFormat = (event, newFormats) => {
-    if (newFormats) {
-      newFormats.forEach((format) => {
-        const option = options.find((opt) => opt.name === format);
-        if (option) {
-          option.fn({ target: { value: true } });
-          console.log(option.fn);
-        }
-      });
-      setFormats(newFormats);
+    let targetValue = event.target.value || event.target.dataset.name;
+    if (targetValue !== undefined) {
+      options
+        .filter((option) => option.name === targetValue)[0]
+        .fn({
+          target: {
+            value: newFormats.indexOf(targetValue) > -1,
+          },
+        });
+      if (
+        options.filter((option) => option.name === targetValue)[0].noChange ==
+        undefined
+      ) {
+        setFormats(newFormats);
+      }
     }
   };
 
