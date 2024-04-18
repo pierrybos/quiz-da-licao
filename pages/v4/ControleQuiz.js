@@ -27,6 +27,9 @@ export default ({
   fnShowText,
   fnShowImage,
   fnShowQrcode,
+  showImage,
+  showQrcode,
+  showText,
 }) => {
   return (
     <FormQrControll
@@ -49,6 +52,9 @@ export default ({
       fnShowText={fnShowText}
       fnShowImage={fnShowImage}
       fnShowQrcode={fnShowQrcode}
+      showImage={showImage}
+      showQrcode={showQrcode}
+      showText={showText}
     />
   );
 };

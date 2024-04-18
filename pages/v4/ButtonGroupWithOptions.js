@@ -24,14 +24,7 @@ const ButtonGroupWithOptions = ({ options, modal }) => {
   }, [options]);
 
   const handleClick = (option) => {
-    option.fn({ target: { value: !formats.includes(option.name) } });
-    if (!option.noChange) {
-      if (formats.includes(option.name)) {
-        setFormats(formats.filter((format) => format !== option.name));
-      } else {
-        setFormats([...formats, option.name]);
-      }
-    }
+    option.fn({ target: { value: !option.initialState } });
   };
 
   return (
@@ -44,11 +37,12 @@ const ButtonGroupWithOptions = ({ options, modal }) => {
       {options.map((option) => (
         <Button
           key={option.name}
-          variant={formats.includes(option.name) ? "contained" : "outlined"}
+          variant={option.initialState ? "contained" : "outlined"}
           onClick={() => handleClick(option)}
           aria-label={option.label}
+          value={option.initialState}
         >
-          {option.icon}
+          {option.icon || option.label}
         </Button>
       ))}
     </ButtonGroup>

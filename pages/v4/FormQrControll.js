@@ -51,6 +51,9 @@ export default ({
   fnShowImage,
   fnShowText,
   fnShowQrcode,
+  showImage,
+  showQrcode,
+  showText,
 }) => {
   return (
     <Box sx={styles}>
@@ -122,6 +125,9 @@ export default ({
             fnShowQrcode={fnShowQrcode}
             fnShowText={fnShowText}
             fnShowImage={fnShowImage}
+            showImage={showImage}
+            showQrcode={showQrcode}
+            showText={showText}
           />
         </Grid>
       </Grid>

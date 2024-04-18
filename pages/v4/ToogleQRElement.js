@@ -2,6 +2,9 @@ import { Title, Image, QrCode } from "@mui/icons-material";
 import ButtonGroupWithOptions from "./ButtonGroupWithOptions";
 
 const ToogleQRElement = ({
+  showText,
+  showImage,
+  showQrcode,
   fnShowText,
   fnShowImage,
   fnShowQrcode,
@@ -19,21 +22,21 @@ const ToogleQRElement = ({
       label: "Título",
       icon: <Title />,
       fn: fnShowText,
-      initialState: true,
+      initialState: showText,
     },
     {
       name: "imagem",
       label: "Imagem",
       icon: <Image />,
       fn: fnShowImage,
-      initialState: false,
+      initialState: showImage,
     },
     {
       name: "qrcode",
       label: "QrCode",
       icon: <QrCode />,
       fn: fnShowQrcode,
-      initialState: false,
+      initialState: showQrcode,
     },
   ];
 

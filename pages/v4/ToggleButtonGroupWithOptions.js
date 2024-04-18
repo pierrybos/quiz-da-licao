@@ -50,10 +50,10 @@ const ToggleButtonGroupWithOptions = ({ options }) => {
       {options.map((option) => (
         <ToggleButton
           key={option.name}
-          value={option.name}
+          value={option.initialState}
           aria-label={option.label}
         >
-          {option.icon}
+          {option.icon || option.label}
         </ToggleButton>
       ))}
     </ToggleButtonGroup>

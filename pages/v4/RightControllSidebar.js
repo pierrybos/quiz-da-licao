@@ -76,13 +76,6 @@ export default () => {
         </Head>
       </div>
       <div>
-        <IconButton
-          className="handle right"
-          aria-label="Edit"
-          onClick={handleOpen}
-        >
-          <Edit />
-        </IconButton>
         <ToogleElemento
           display={showRightPlace}
           fnDisplay={(e) => dispatchUpdate(e, "setShowRightPlace")}
@@ -92,6 +85,7 @@ export default () => {
           fnVisitantes={(e) => dispatchUpdate(e, "setShowVisitantesRightPlace")}
           timer={showTimerRightPlace}
           fnTimer={(e) => dispatchUpdate(e, "setShowTimerRightPlace")}
+          modalFn={handleOpen}
         />
       </div>
       <Modal

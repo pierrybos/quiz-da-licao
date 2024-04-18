@@ -35,6 +35,10 @@ export default () => {
   );
   const visitantesLink = useSelector((state) => state.qrcode.visitantesLink);
 
+  const showImage = useSelector((state) => state.qrcode.visitantesShowImage);
+  const showQrcode = useSelector((state) => state.qrcode.visitantesShowQrcode);
+  const showText = useSelector((state) => state.qrcode.visitantesShowText);
+
   return (
     <>
       <div></div>
@@ -44,6 +48,9 @@ export default () => {
           fnShowImage={(e) => dispatchUpdate(e, "setVisitantesShowImage")}
           fnShowQrcode={(e) => dispatchUpdate(e, "setVisitantesShowQrcode")}
           modalFn={handleOpen}
+          showImage={showImage}
+          showQrcode={showQrcode}
+          showText={showText}
         />
       </div>
       <Modal
@@ -72,6 +79,9 @@ export default () => {
           fnShowText={(e) => dispatchUpdate(e, "setVisitantesShowText")}
           fnShowImage={(e) => dispatchUpdate(e, "setVisitantesShowImage")}
           fnShowQrcode={(e) => dispatchUpdate(e, "setVisitantesShowQrcode")}
+          showImage={showImage}
+          showQrcode={showQrcode}
+          showText={showText}
         />
       </Modal>
     </>

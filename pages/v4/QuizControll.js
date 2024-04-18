@@ -22,6 +22,9 @@ export default () => {
   const quizQrcodeColor = useSelector((state) => state.qrcode.quizQrcodeColor);
   const quizTextColor = useSelector((state) => state.qrcode.quizTextColor);
   const quizLink = useSelector((state) => state.qrcode.quizLink);
+  const showImage = useSelector((state) => state.qrcode.quizShowImage);
+  const showQrcode = useSelector((state) => state.qrcode.quizShowQrcode);
+  const showText = useSelector((state) => state.qrcode.quizShowText);
 
   return (
     <>
@@ -36,6 +39,9 @@ export default () => {
           fnShowImage={(e) => dispatchUpdate(e, "setQuizShowImage")}
           fnShowQrcode={(e) => dispatchUpdate(e, "setQuizShowQrcode")}
           modalFn={handleOpen}
+          showImage={showImage}
+          showQrcode={showQrcode}
+          showText={showText}
         />
       </div>
       <Modal
@@ -64,6 +70,9 @@ export default () => {
           fnShowText={(e) => dispatchUpdate(e, "setQuizShowText")}
           fnShowImage={(e) => dispatchUpdate(e, "setQuizShowImage")}
           fnShowQrcode={(e) => dispatchUpdate(e, "setQuizShowQrcode")}
+          showImage={showImage}
+          showQrcode={showQrcode}
+          showText={showText}
         />
       </Modal>
     </>
