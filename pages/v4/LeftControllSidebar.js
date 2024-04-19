@@ -63,13 +63,41 @@ export default () => {
       <div className="sideBar leftSideBar">
         <ToogleElemento
           display={showLeftPlace}
-          fnDisplay={(e) => dispatchUpdate(e, "setShowLeftPlace")}
+          fnDisplay={() =>
+            dispatchUpdate(
+              {
+                target: { value: !showLeftPlace },
+              },
+              "setShowLeftPlace"
+            )
+          }
           quiz={showQuizLeftPlace}
-          fnQuiz={(e) => dispatchUpdate(e, "setShowQuizLeftPlace")}
+          fnQuiz={() =>
+            dispatchUpdate(
+              {
+                target: { value: !showQuizLeftPlace },
+              },
+              "setShowQuizLeftPlace"
+            )
+          }
           visitantes={showVisitantesLeftPlace}
-          fnVisitantes={(e) => dispatchUpdate(e, "setShowVisitantesLeftPlace")}
+          fnVisitantes={() =>
+            dispatchUpdate(
+              {
+                target: { value: !showVisitantesLeftPlace },
+              },
+              "setShowVisitantesLeftPlace"
+            )
+          }
           timer={showTimerLeftPlace}
-          fnTimer={(e) => dispatchUpdate(e, "setShowTimerLeftPlace")}
+          fnTimer={() =>
+            dispatchUpdate(
+              {
+                target: { value: !showTimerLeftPlace },
+              },
+              "setShowTimerLeftPlace"
+            )
+          }
           modalFn={handleOpen}
         />
       </div>

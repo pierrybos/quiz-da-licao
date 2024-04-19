@@ -21,20 +21,6 @@ export default ({
   fnShowTimer,
   modalFn,
 }) => {
-  const [formats, setFormats] = useState(() => {
-    const initialFormats = [];
-    if (showTimer) initialFormats.push("showTimer");
-    return initialFormats;
-  });
-
-  useEffect(() => {
-    setFormats(() => {
-      const initialFormats = [];
-      if (showTimer) initialFormats.push("showTimer");
-      return initialFormats;
-    });
-  }, [showTimer]);
-
   const options = [
     {
       name: "plusOne",
@@ -68,7 +54,7 @@ export default ({
       name: "showTimer",
       label: "showTimer",
       icon: showTimer ? <VisibilityIcon /> : <VisibilityOffIcon />,
-      fn: fnShowTimer, // TODO: timer está ficando false todas as vezes
+      fn: fnShowTimer,
       initialState: showTimer,
     },
     {
@@ -80,7 +66,5 @@ export default ({
     },
   ];
 
-  return (
-    <ButtonGroupWithOptions options={options} modal={modalFn} /> // Substituindo ToggleButtonGroup por ToggleButtonGroupWithOptions
-  );
+  return <ButtonGroupWithOptions options={options} modal={modalFn} />;
 };

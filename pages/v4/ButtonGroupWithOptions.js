@@ -23,8 +23,8 @@ const ButtonGroupWithOptions = ({ options, modal }) => {
     });
   }, [options]);
 
-  const handleClick = (option) => {
-    option.fn({ target: { value: !option.initialState } });
+  const handleClick = (ev, option) => {
+    option.fn();
   };
 
   return (
@@ -38,7 +38,7 @@ const ButtonGroupWithOptions = ({ options, modal }) => {
         <Button
           key={option.name}
           variant={option.initialState ? "contained" : "outlined"}
-          onClick={() => handleClick(option)}
+          onClick={(ev) => handleClick(ev, option)}
           aria-label={option.label}
           value={option.initialState}
         >

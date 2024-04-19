@@ -78,13 +78,33 @@ export default () => {
       <div>
         <ToogleElemento
           display={showRightPlace}
-          fnDisplay={(e) => dispatchUpdate(e, "setShowRightPlace")}
+          fnDisplay={() =>
+            dispatchUpdate(
+              { target: { value: !showRightPlace } },
+              "setShowRightPlace"
+            )
+          }
           quiz={showQuizRightPlace}
-          fnQuiz={(e) => dispatchUpdate(e, "setShowQuizRightPlace")}
+          fnQuiz={() =>
+            dispatchUpdate(
+              { target: { value: !showQuizRightPlace } },
+              "setShowQuizRightPlace"
+            )
+          }
           visitantes={showVisitantesRightPlace}
-          fnVisitantes={(e) => dispatchUpdate(e, "setShowVisitantesRightPlace")}
+          fnVisitantes={() =>
+            dispatchUpdate(
+              { target: { value: !showVisitantesRightPlace } },
+              "setShowVisitantesRightPlace"
+            )
+          }
           timer={showTimerRightPlace}
-          fnTimer={(e) => dispatchUpdate(e, "setShowTimerRightPlace")}
+          fnTimer={() =>
+            dispatchUpdate(
+              { target: { value: !showTimerRightPlace } },
+              "setShowTimerRightPlace"
+            )
+          }
           modalFn={handleOpen}
         />
       </div>

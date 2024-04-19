@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import ButtonGroupWithOptions from "./ButtonGroupWithOptions";
 
 export default ({
@@ -14,44 +14,38 @@ export default ({
   fnDisplay,
   modalFn,
 }) => {
-  const atributos = {
-    quiz: {
+  const options = [
+    {
       name: "quiz",
       label: "Quiz",
-      initialValue: quiz,
+      initialState: quiz,
       fn: fnQuiz,
     },
-    visitantes: {
+    {
       name: "visitantes",
       label: "Visitantes",
-      initialValue: visitantes,
+      initialState: visitantes,
       fn: fnVisitantes,
     },
-    timer: {
+    {
       name: "timer",
       label: "Timer",
-      initialValue: timer,
+      icon: <AccessTimeFilledIcon />,
+      initialState: timer,
       fn: fnTimer,
     },
-    display: {
+    {
       name: "display",
       label: "Display",
-      initialValue: display,
+      icon: display ? <VisibilityIcon /> : <VisibilityOffIcon />,
       fn: fnDisplay,
+      initialState: display,
     },
-  };
+  ];
 
   return (
     <>
-      <ButtonGroupWithOptions
-        options={[
-          atributos.quiz,
-          atributos.visitantes,
-          atributos.timer,
-          atributos.display,
-        ]}
-        modal={modalFn}
-      />
+      <ButtonGroupWithOptions options={options} modal={modalFn} />
     </>
   );
 };

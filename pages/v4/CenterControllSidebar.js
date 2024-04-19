@@ -85,15 +85,33 @@ export default () => {
       <div>
         <ToogleElemento
           display={showCenterPlace}
-          fnDisplay={(e) => dispatchUpdate(e, "setShowCenterPlace")}
+          fnDisplay={() =>
+            dispatchUpdate(
+              { target: { value: !showCenterPlace } },
+              "setShowCenterPlace"
+            )
+          }
           quiz={showQuizCenterPlace}
-          fnQuiz={(e) => dispatchUpdate(e, "setShowQuizCenterPlace")}
+          fnQuiz={() =>
+            dispatchUpdate(
+              { target: { value: !showQuizCenterPlace } },
+              "setShowQuizCenterPlace"
+            )
+          }
           visitantes={showVisitantesCenterPlace}
-          fnVisitantes={(e) =>
-            dispatchUpdate(e, "setShowVisitantesCenterPlace")
+          fnVisitantes={() =>
+            dispatchUpdate(
+              { target: { value: !showVisitantesCenterPlace } },
+              "setShowVisitantesCenterPlace"
+            )
           }
           timer={showTimerCenterPlace}
-          fnTimer={(e) => dispatchUpdate(e, "setShowTimerCenterPlace")}
+          fnTimer={() =>
+            dispatchUpdate(
+              { target: { value: !showTimerCenterPlace } },
+              "setShowTimerCenterPlace"
+            )
+          }
           modalFn={handleOpen}
         />
       </div>

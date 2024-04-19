@@ -44,9 +44,24 @@ export default () => {
       <div></div>
       <div className="visitantesControll">
         <ToogleQRElement
-          fnShowText={(e) => dispatchUpdate(e, "setVisitantesShowText")}
-          fnShowImage={(e) => dispatchUpdate(e, "setVisitantesShowImage")}
-          fnShowQrcode={(e) => dispatchUpdate(e, "setVisitantesShowQrcode")}
+          fnShowText={() =>
+            dispatchUpdate(
+              { target: { value: !showText } },
+              "setVisitantesShowText"
+            )
+          }
+          fnShowImage={() =>
+            dispatchUpdate(
+              { target: { value: !showImage } },
+              "setVisitantesShowImage"
+            )
+          }
+          fnShowQrcode={() =>
+            dispatchUpdate(
+              { target: { value: !showQrcode } },
+              "setVisitantesShowQrcode"
+            )
+          }
           modalFn={handleOpen}
           showImage={showImage}
           showQrcode={showQrcode}
