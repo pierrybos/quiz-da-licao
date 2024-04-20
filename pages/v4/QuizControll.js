@@ -79,9 +79,18 @@ export default () => {
           fnTitle={(e) => dispatchUpdate(e, "setQuizTitle")}
           fnSubtitle={(e) => dispatchUpdate(e, "setQuizSubtitle")}
           fnLink={(e) => dispatchUpdate(e, "setQuizLink")}
-          fnShowText={(e) => dispatchUpdate(e, "setQuizShowText")}
-          fnShowImage={(e) => dispatchUpdate(e, "setQuizShowImage")}
-          fnShowQrcode={(e) => dispatchUpdate(e, "setQuizShowQrcode")}
+          fnShowText={() =>
+            dispatchUpdate({ target: { value: showText } }, "setQuizShowText")
+          }
+          fnShowImage={() =>
+            dispatchUpdate({ target: { value: showImage } }, "setQuizShowImage")
+          }
+          fnShowQrcode={() =>
+            dispatchUpdate(
+              { target: { value: showQrcode } },
+              "setQuizShowQrcode"
+            )
+          }
           showImage={showImage}
           showQrcode={showQrcode}
           showText={showText}

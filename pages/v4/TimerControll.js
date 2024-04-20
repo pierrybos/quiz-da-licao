@@ -23,6 +23,7 @@ export default () => {
   const audioEnableTimer = useSelector((state) => state.timer.audioEnable);
   const timerTextColor = useSelector((state) => state.timer.timerTextColor);
   const timerRemainTitle = useSelector((state) => state.timer.timerRemainTitle);
+  const audioGender = useSelector((state) => state.booleans.audioGender);
   const timerRemainSubtitle = useSelector(
     (state) => state.timer.timerRemainSubtitle
   );
@@ -87,7 +88,7 @@ export default () => {
           timerSubtitle={timerSubtitle}
           timerRemainTitle={timerRemainTitle}
           timerRemainSubtitle={timerRemainSubtitle}
-          timerTextSize={timerTextSize}
+          textSize={timerTextSize}
           audioEnable={audioEnableTimer}
           timerTextColor={timerTextColor}
           fnTimerTextColor={(e) => dispatchUpdate(e, "setTimerTextColor")}
@@ -110,6 +111,14 @@ export default () => {
           fnSubtitle={(e) => dispatchUpdate(e, "setTimerSubtitle")}
           fnTitleRemain={(e) => dispatchUpdate(e, "setTimerTitleRemain")}
           fnSubtitleRemain={(e) => dispatchUpdate(e, "setTimerSubtitleRemain")}
+          setGender={true}
+          audioGender={audioGender}
+          fnAudioGender={() =>
+            dispatchUpdate(
+              { target: { value: !audioGender } },
+              "setAudioGender"
+            )
+          }
         />
       </Modal>
     </>

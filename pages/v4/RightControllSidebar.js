@@ -127,20 +127,38 @@ export default () => {
           fnSideBarTopPosition={(e) =>
             dispatchUpdate(e, "setRightSideBarMarginTop")
           }
-          displayed={showRightPlace}
-          fnDisplayed={(e) => dispatchUpdate(e, "setShowRightPlace")}
           centerBackgroundColor={rightBackgroundColor}
           fnBackgroundColor={(e) =>
             dispatchUpdate(e, "setRightBackgroundColor")
           }
+          displayed={showRightPlace}
+          fnDisplayed={() =>
+            dispatchUpdate(
+              { target: { value: !showRightPlace } },
+              "setShowRightPlace"
+            )
+          }
           quizDisplay={showQuizRightPlace}
-          fnQuizDisplay={(e) => dispatchUpdate(e, "setShowQuizRightPlace")}
+          fnQuizDisplay={() =>
+            dispatchUpdate(
+              { target: { value: !showQuizRightPlace } },
+              "setShowQuizRightPlace"
+            )
+          }
           visitantesDisplay={showVisitantesRightPlace}
-          fnVisitantesDisplay={(e) =>
-            dispatchUpdate(e, "setShowVisitantesRightPlace")
+          fnVisitantesDisplay={() =>
+            dispatchUpdate(
+              { target: { value: !showVisitantesRightPlace } },
+              "setShowVisitantesRightPlace"
+            )
           }
           timerDisplay={showTimerRightPlace}
-          fnTimerDisplay={(e) => dispatchUpdate(e, "setShowTimerRightPlace")}
+          fnTimerDisplay={() =>
+            dispatchUpdate(
+              { target: { value: !showTimerRightPlace } },
+              "setShowTimerRightPlace"
+            )
+          }
         />
       </Modal>
     </>

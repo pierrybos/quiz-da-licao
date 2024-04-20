@@ -1,29 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  quizTitle: "Acesse o Quiz pelo QRCode",
-  quizSubtitle: "Use a câmera do seu celular",
-  quizTextSize: 1,
-  quizImageSize: 300,
-  quizQrcodeSize: 300,
-  quizQrcodeColor: { r: 99, g: 99, b: 99, a: 100 },
-  quizTextColor: { r: 99, g: 99, b: 99, a: 100 },
+  quizImageSize: 326,
   quizLink: "",
+  quizQrcodeColor: { r: 31, g: 37, b: 103, a: 1 },
+  quizQrcodeSize: 338,
+  quizShowImage: true,
   quizShowQrcode: true,
   quizShowText: true,
-  quizShowImage: true,
-  visitantesTitle: "Primeira vez?",
-  visitantesSubtitle:
-    "Aponte sua câmera para o link abaixo e vamos manter contato!",
-  visitantesTextSize: "",
-  visitantesImageSize: "",
-  visitantesQrcodeSize: "",
-  visitantesQrcodeColor: { r: 99, g: 99, b: 99, a: 100 },
-  visitantesTextColor: { r: 99, g: 99, b: 99, a: 100 },
+  quizSubtitle: "Use a câmera do seu celular",
+  quizTextColor: { r: 40, g: 43, b: 105, a: 1 },
+  quizTextSize: 1.3,
+  quizTitle: "Acesse o Quiz pelo QRCode",
+  visitantesImageSize: 277,
   visitantesLink: "",
+  visitantesQrcodeColor: { r: 105, g: 97, b: 97, a: 1 },
+  visitantesQrcodeSize: 371,
+  visitantesShowImage: true,
   visitantesShowQrcode: true,
   visitantesShowText: true,
-  visitantesShowImage: true,
+  visitantesSubtitle:
+    "Aponte sua câmera para o link abaixo e vamos manter contato!",
+  visitantesTextColor: { r: 99, g: 99, b: 99, a: 100 },
+  visitantesTextSize: 1.2,
+  visitantesTitle: "Primeira vez?",
 };
 
 export const qrcode = createSlice({

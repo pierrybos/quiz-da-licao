@@ -46,7 +46,7 @@ export default () => {
   position: absolute;
   top: ${rightSideBarMarginTop}%;
   padding: 30px;
-  
+    border-radius: 50px;
   min-height: 100px; /* Ajuste conforme necessário */
   min-width: ${rightSideBarWidth}%; /* Ajuste conforme necessário */
   background-color: rgba(${rightBackgroundColor.r}, ${

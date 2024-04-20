@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { useEffect, useState } from "react";
+
 import { Grid, Typography } from "@mui/material";
 
 import LeftControllSidebar from "./LeftControllSidebar";
@@ -9,8 +11,55 @@ import VisitantesControll from "./VisitantesControll";
 import TimerControll from "./TimerControll";
 import ImageBackground from "./ImagemBackground";
 import BodyControll from "./BodyControll";
+import { useSearchParams } from "next/navigation";
+import { useAppState } from "./stateService";
 
 export default () => {
+  const searchParams = useSearchParams();
+  const { dispatchUpdate } = useAppState(); // Use o hook personalizado
+
+  function afterRender() {
+    if (searchParams.get("quiz")) {
+      dispatchUpdate(
+        {
+          target: {
+            value:
+              "https://es.minhaes.org/quizgeral/1/" + searchParams.get("quiz"),
+          },
+        },
+        "setQuizLink"
+      );
+    }
+
+    if (searchParams.get("visitas")) {
+      dispatchUpdate(
+        {
+          target: {
+            value:
+              "https://minhaes.org/interessados-recepcao/interessados-recepcao.php?key=" +
+              searchParams.get("visitas"),
+          },
+        },
+        "setVisitantesLink"
+      );
+    }
+
+    if (searchParams.get("time")) {
+      dispatchUpdate(
+        {
+          target: {
+            value: searchParams.get("time"),
+          },
+        },
+        "setLimitTime"
+      );
+    }
+  }
+
+  useEffect(() => {
+    afterRender();
+  }, [searchParams]);
+
   return (
     <>
       <div>

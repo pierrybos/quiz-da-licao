@@ -53,6 +53,9 @@ export default ({
   fnSubtitle,
   fnTitleRemain,
   fnSubtitleRemain,
+  audioGender,
+  fnAudioGender,
+  setGender,
 }) => {
   return (
     <Box sx={styles}>
@@ -124,6 +127,9 @@ export default ({
             fnShowTimer={fnShowTimer}
             audioEnable={audioEnable}
             fnAudioEnable={fnAudioEnable}
+            audioGender={audioGender}
+            fnAudioGender={fnAudioGender}
+            setGender={setGender}
           />
         </Grid>
       </Grid>

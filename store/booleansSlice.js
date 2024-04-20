@@ -26,12 +26,20 @@ const initialState = {
   showQuizRightPlace: false,
   showVisitantesRightPlace: false,
   showTimerRightPlace: false,
+  fullScreen: false,
+  audioGender: true,
 };
 
 export const booleansSlice = createSlice({
   name: "booleans",
   initialState,
   reducers: {
+    setAudioGender: (state, action) => {
+      state.audioGender = action.payload;
+    },
+    setFullScreen: (state, action) => {
+      state.fullScreen = action.payload;
+    },
     setShowQuizCenterPlace: (state, action) => {
       state.showQuizCenterPlace = action.payload;
     },
@@ -156,5 +164,7 @@ export const {
   setShowRightPlace,
   setShowTimerRightPlace,
   setShowVisitantesRightPlace,
+  setFullScreen,
+  setAudioGender,
 } = booleansSlice.actions;
 export default booleansSlice.reducer;

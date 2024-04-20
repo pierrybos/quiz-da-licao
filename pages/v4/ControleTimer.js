@@ -23,6 +23,9 @@ export default ({
   fnSubtitle,
   fnTitleRemain,
   fnSubtitleRemain,
+  audioGender,
+  fnAudioGender,
+  setGender,
 }) => {
   return (
     <FormTimerControll
@@ -48,6 +51,9 @@ export default ({
       fnSubtitle={fnSubtitle}
       fnTitleRemain={fnTitleRemain}
       fnSubtitleRemain={fnSubtitleRemain}
+      audioGender={audioGender}
+      fnAudioGender={fnAudioGender}
+      setGender={setGender}
     />
   );
 };

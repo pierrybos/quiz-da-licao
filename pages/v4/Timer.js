@@ -7,6 +7,12 @@ const Timer = function ({ show }) {
   const [controlls, setControlls] = useState(false);
   const [timeRemain, setTimeRemain] = useState("10h10m10s");
   const [beforeOff, setBeforeOff] = useState(true);
+  const [audioContext, setAudioContext] = useState(null);
+
+  useEffect(() => {
+    const context = new AudioContext();
+    setAudioContext(context);
+  }, []);
 
   const router = useRouter();
 
@@ -14,6 +20,7 @@ const Timer = function ({ show }) {
   const showTimer = useSelector((state) => state.timer.showTimer);
   const timerTextSize = useSelector((state) => state.timer.timerTextSize);
   const timerTextColor = useSelector((state) => state.timer.timerTextColor);
+  const audioGender = useSelector((state) => state.booleans.audioGender);
 
   const audioEnable = useSelector((state) => state.timer.audioEnable);
 
@@ -24,7 +31,7 @@ const Timer = function ({ show }) {
     (state) => state.timer.timerSubtitle
   );
   const titleCounterTimeOffA = useSelector(
-    (state) => state.timer.timerRemainSubtitle
+    (state) => state.timer.timerRemainTitle
   );
   const titleCounterTimeOffB = useSelector(
     (state) => state.timer.timerRemainSubtitle
@@ -47,22 +54,51 @@ const Timer = function ({ show }) {
   }
 
   const virtualPlayer = async function (time) {
-    let fileMp3 = "/mp3/1min.mp3";
+    if (!audioContext) return;
+
+    let fileMp3 = audioGender ? "/mp3/1min.mp3" : "/mp3/1min.h.mp3";
     if (time == 5) {
-      fileMp3 = "/mp3/5min.mp3";
+      fileMp3 = audioGender ? "/mp3/5min.mp3" : "/mp3/5min.h.mp3";
     }
-    const audioContext = new AudioContext();
 
     const fetchResponse = await fetch(fileMp3);
     const arrayBuffer = await fetchResponse.arrayBuffer();
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
+    normalizeAudioBuffer(audioBuffer);
+
     const bufferSource = audioContext.createBufferSource();
     bufferSource.buffer = audioBuffer;
     bufferSource.connect(audioContext.destination);
-
     bufferSource.start(0);
   };
+
+  function normalizeAudioBuffer(audioBuffer) {
+    const channels = audioBuffer.numberOfChannels;
+    const length = audioBuffer.length;
+    let maxVolume = 0;
+
+    // Encontra o valor máximo em todos os canais
+    for (let channel = 0; channel < channels; channel++) {
+      const channelData = audioBuffer.getChannelData(channel);
+      for (let i = 0; i < length; i++) {
+        const absValue = Math.abs(channelData[i]);
+        if (absValue > maxVolume) {
+          maxVolume = absValue;
+        }
+      }
+    }
+
+    // Normaliza o áudio dividindo pelo valor máximo
+    if (maxVolume > 1) {
+      for (let channel = 0; channel < channels; channel++) {
+        const channelData = audioBuffer.getChannelData(channel);
+        for (let i = 0; i < length; i++) {
+          channelData[i] /= maxVolume;
+        }
+      }
+    }
+  }
 
   const dispatchPlayAudio = function (
     hoursRemaining,
@@ -87,7 +123,7 @@ const Timer = function ({ show }) {
     }
   };
 
-  let debounceDispatchPlayAudio = debounce(dispatchPlayAudio, 1500);
+  let debounceDispatchPlayAudio = debounce(dispatchPlayAudio, 2000);
 
   function calcularTimer() {
     const now = moment();

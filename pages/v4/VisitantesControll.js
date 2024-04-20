@@ -91,9 +91,24 @@ export default () => {
           fnTitle={(e) => dispatchUpdate(e, "setVisitantesTitle")}
           fnSubtitle={(e) => dispatchUpdate(e, "setVisitantesSubtitle")}
           fnLink={(e) => dispatchUpdate(e, "setVisitantesLink")}
-          fnShowText={(e) => dispatchUpdate(e, "setVisitantesShowText")}
-          fnShowImage={(e) => dispatchUpdate(e, "setVisitantesShowImage")}
-          fnShowQrcode={(e) => dispatchUpdate(e, "setVisitantesShowQrcode")}
+          fnShowText={() =>
+            dispatchUpdate(
+              { target: { value: !showText } },
+              "setVisitantesShowText"
+            )
+          }
+          fnShowImage={() =>
+            dispatchUpdate(
+              { target: { value: !showImage } },
+              "setVisitantesShowImage"
+            )
+          }
+          fnShowQrcode={() =>
+            dispatchUpdate(
+              { target: { value: !showQrcode } },
+              "setVisitantesShowQrcode"
+            )
+          }
           showImage={showImage}
           showQrcode={showQrcode}
           showText={showText}

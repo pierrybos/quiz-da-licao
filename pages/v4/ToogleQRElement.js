@@ -10,12 +10,6 @@ const ToogleQRElement = ({
   fnShowQrcode,
   modalFn,
 }) => {
-  const handleIconClick = (iconFunction) => {
-    // Execute a função associada ao ícone
-    iconFunction();
-    // Adicione aqui qualquer outra lógica que você deseja executar quando o ícone é clicado
-  };
-
   const options = [
     {
       name: "titulo",

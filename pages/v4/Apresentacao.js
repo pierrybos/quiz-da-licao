@@ -3,6 +3,7 @@ import LeftSidebar from "./LeftSidebar";
 import CenterSidebar from "./CenterSidebar";
 import RightSidebar from "./RightSidebar";
 import { useSelector } from "react-redux";
+import Fullscreen from "./Fullscreen";
 
 export default () => {
   const backgroundImageSrc = useSelector(
@@ -35,6 +36,7 @@ export default () => {
         </Head>
       </div>
       <div className="container">
+        <Fullscreen />
         <LeftSidebar />
         <CenterSidebar />
         <RightSidebar />

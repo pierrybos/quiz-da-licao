@@ -9,6 +9,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PlayDisabledIcon from "@mui/icons-material/PlayDisabled";
 import ButtonGroupWithOptions from "./ButtonGroupWithOptions";
+import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural";
+import FaceIcon from "@mui/icons-material/Face";
 
 export default ({
   fnPlusOne,
@@ -20,6 +22,9 @@ export default ({
   fnAudioEnable,
   fnShowTimer,
   modalFn,
+  audioGender,
+  fnAudioGender,
+  setGender,
 }) => {
   const options = [
     {
@@ -65,6 +70,15 @@ export default ({
       initialState: audioEnable,
     },
   ];
+  if (setGender) {
+    options.push({
+      name: "audioGender",
+      label: "audioGender",
+      icon: audioGender ? <FaceRetouchingNaturalIcon /> : <FaceIcon />,
+      fn: fnAudioGender,
+      initialState: audioGender,
+    });
+  }
 
   return <ButtonGroupWithOptions options={options} modal={modalFn} />;
 };

@@ -48,11 +48,12 @@ export default () => {
             {`
 .centerSideBar {
   visibility: ${showCenterPlace ? "visible" : "hidden"};
-  position: relative;
+  position: absolute;
   top: ${centerSideBarMarginTop}%;
   padding: 30px;
+    border-radius: 50px;
   min-height: 100px; /* Ajuste conforme necessário */
-  width: ${centerSideBarWidth}%; /* Ajuste conforme necessário */
+  min-width: ${centerSideBarWidth}%; /* Ajuste conforme necessário */
   background-color: rgba(${centerBackgroundColor.r}, ${
               centerBackgroundColor.g
             }, ${centerBackgroundColor.b}, ${centerBackgroundColor.a}); 
