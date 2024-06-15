@@ -96,6 +96,12 @@ export const qrcode = createSlice({
     setVisitantesShowText: (state, action) => {
       state.visitantesShowText = action.payload;
     },
+    importState: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.qrcode,
+      };
+    },
   },
 });
 export const {
@@ -121,6 +127,7 @@ export const {
   setVisitantesShowText,
   setVisitantesShowQrcode,
   setVisitantesShowImage,
+  importState,
 } = qrcode.actions;
 
 export default qrcode.reducer;

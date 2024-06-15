@@ -40,6 +40,12 @@ export const textoSlice = createSlice({
     setSubTitleUrlVisitas(state, action) {
       state.subTitleUrlVisitas = action.payload;
     },
+    importState: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.texto,
+      };
+    },
   },
 });
 
@@ -52,6 +58,7 @@ export const {
   setTitleCounterTimeOffB,
   setSubTitleUrlQuiz,
   setSubTitleUrlVisitas,
+  importState,
 } = textoSlice.actions;
 
 export default textoSlice.reducer;

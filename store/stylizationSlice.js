@@ -121,6 +121,12 @@ export const stylization = createSlice({
     setRightSideBarWidth(state, action) {
       state.rightSideBarWidth = action.payload;
     },
+    importState: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.stylization,
+      };
+    },
   },
 });
 
@@ -150,6 +156,7 @@ export const {
   setRightSideBarRight,
   setRightSideBarWidth,
   setBackgroundImage,
+  importState,
 } = stylization.actions;
 
 export default stylization.reducer;

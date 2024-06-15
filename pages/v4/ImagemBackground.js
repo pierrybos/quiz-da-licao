@@ -1,7 +1,21 @@
 import React, { useState } from "react";
 import { useAppState } from "./stateService";
 import { useSelector } from "react-redux";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 const ImageBackground = () => {
   const source = useSelector((state) => state.stylization.backgroundImage);
   const { dispatchUpdate } = useAppState();
@@ -60,12 +74,20 @@ const ImageBackground = () => {
         width="auto"
         style={{ display: "block" }}
       />
-      <input
-        type="file"
-        onChange={handleImageChange}
-        accept="image/*"
-        style={{ display: "block" }}
-      />
+      <Button
+        component="label"
+        role={undefined}
+        variant="contained"
+        tabIndex={-1}
+        startIcon={<ImageSearchIcon />}
+      >
+        Escolha:
+        <VisuallyHiddenInput
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+      </Button>
     </div>
   );
 };

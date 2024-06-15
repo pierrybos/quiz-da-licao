@@ -43,6 +43,12 @@ export const limitTimeSlice = createSlice({
     setTimerSubtitleRemain(state, action) {
       state.timerRemainSubtitle = action.payload;
     },
+    importState: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.timer,
+      };
+    },
   },
 });
 
@@ -56,5 +62,6 @@ export const {
   setTimerSubtitle,
   setTimerTitleRemain,
   setTimerSubtitleRemain,
+  importState,
 } = limitTimeSlice.actions;
 export default limitTimeSlice.reducer;

@@ -9,7 +9,9 @@ import RightControllSidebar from "./RightControllSidebar";
 import QuizControll from "./QuizControll";
 import VisitantesControll from "./VisitantesControll";
 import TimerControll from "./TimerControll";
+import ExportButton from "./ExportButton";
 import ImageBackground from "./ImagemBackground";
+import ImportButton from "./ImportButton";
 import BodyControll from "./BodyControll";
 import { useSearchParams } from "next/navigation";
 import { useAppState } from "./stateService";
@@ -150,6 +152,23 @@ export default () => {
                 Geral
               </Typography>
               <BodyControll />
+            </div>
+          </Grid>
+          <Grid item xs={4}>
+            <div className="sidebarContainer">
+              <Typography variant="h6" gutterBottom>
+                Imagem de fundo
+              </Typography>
+              <ImageBackground />
+            </div>
+          </Grid>
+          <Grid item xs={4}>
+            <div className="sidebarContainer">
+              <Typography variant="h6" gutterBottom>
+                Backup
+              </Typography>
+              <ImportButton />
+              <ExportButton />
             </div>
           </Grid>
         </Grid>

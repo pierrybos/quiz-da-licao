@@ -1,11 +1,10 @@
-import ImageBackground from "./ImagemBackground";
+import { ButtonGroup } from "@mui/material";
 import PageButtonControll from "./PageButtonControll";
 
 export default () => {
   return (
     <div>
       <PageButtonControll />
-      <ImageBackground />
     </div>
   );
 };

@@ -19,9 +19,15 @@ export const urlSlice = createSlice({
     setUrlQuiz(state, action) {
       state.urlQuiz = action.payload;
     },
+    importState: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.url,
+      };
+    },
   },
 });
 
-export const { setUrlQuiz, setUrlVisitas } = urlSlice.actions;
+export const { setUrlQuiz, setUrlVisitas, importState } = urlSlice.actions;
 
 export default urlSlice.reducer;

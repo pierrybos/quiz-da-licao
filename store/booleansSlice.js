@@ -132,6 +132,12 @@ export const booleansSlice = createSlice({
     setShowVisitantesRightPlace(state, action) {
       state.showVisitantesRightPlace = action.payload;
     },
+    importState: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.booleans,
+      };
+    },
   },
 });
 
@@ -166,5 +172,6 @@ export const {
   setShowVisitantesRightPlace,
   setFullScreen,
   setAudioGender,
+  importState,
 } = booleansSlice.actions;
 export default booleansSlice.reducer;

@@ -2,14 +2,16 @@ import { combineReducers, createStore } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import users from "./usersSlice";
-import counter from "./counterSlice";
-import url from "./urlSlice";
-import texto from "./textoSlice";
-import timer from "./timerSlice";
-import booleans from "./booleansSlice";
-import stylization from "./stylizationSlice";
-import qrcode from "./qrcodeSlice";
+import users, { importState as importUsersState } from "./usersSlice";
+import counter, { importState as importCounterState } from "./counterSlice";
+import url, { importState as importUrlState } from "./urlSlice";
+import texto, { importState as importTextoState } from "./textoSlice";
+import timer, { importState as importTimerState } from "./timerSlice";
+import booleans, { importState as importBooleansState } from "./booleansSlice";
+import stylization, {
+  importState as importStylizationState,
+} from "./stylizationSlice";
+import qrcode, { importState as importQrcodeState } from "./qrcodeSlice";
 
 const slicesList = {
   counter,
@@ -37,5 +39,15 @@ const persistedReducer = persistReducer(persistConfig, combinedReducers);
 export const makeStore = () => {
   const store = createStore(persistedReducer);
   const persistor = persistStore(store);
+  store.importState = (importedState) => {
+    store.dispatch(importUsersState(importedState));
+    store.dispatch(importCounterState(importedState));
+    store.dispatch(importUrlState(importedState));
+    store.dispatch(importTextoState(importedState));
+    store.dispatch(importTimerState(importedState));
+    store.dispatch(importBooleansState(importedState));
+    store.dispatch(importStylizationState(importedState));
+    store.dispatch(importQrcodeState(importedState));
+  };
   return { store, persistor };
 };

@@ -2,6 +2,7 @@ import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import LaunchIcon from "@mui/icons-material/Launch";
 import CancelIcon from "@mui/icons-material/Cancel";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import ButtonGroupWithOptions from "./ButtonGroupWithOptions";
 import { useSelector } from "react-redux";
 import { useAppState } from "./stateService";
@@ -74,6 +75,14 @@ export default () => {
         window.aplicacaoJanela.close();
       },
       initialState: false,
+    },
+    {
+      name: "restart",
+      label: "Restart",
+      icon: <RestartAltIcon />,
+      fn: () => {
+        window.localStorage.clear();
+      },
     },
   ];
 
