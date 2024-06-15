@@ -66,7 +66,7 @@ const ImageBackground = () => {
   };
 
   return (
-    <div>
+    <div style={{ alignContent: "center" }}>
       <img
         src={source}
         alt="miniatura"
@@ -81,7 +81,7 @@ const ImageBackground = () => {
         tabIndex={-1}
         startIcon={<ImageSearchIcon />}
       >
-        Escolha:
+        Trocar
         <VisuallyHiddenInput
           type="file"
           accept="image/*"

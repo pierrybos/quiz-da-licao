@@ -1,9 +1,29 @@
 import React from "react";
 import { useStore } from "react-redux";
-import { loadState, saveState } from "./utils/localStorage"; // Funções para carregar e salvar o estado no localStorage
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
+export const loadState = () => {
+  try {
+    const serializedState = localStorage.getItem("state");
+    if (serializedState === null) {
+      return undefined;
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return undefined;
+  }
+};
+
+export const saveState = (state) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem("state", serializedState);
+  } catch (err) {
+    // Ignore write errors
+  }
+};
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -43,7 +63,6 @@ const ImportButton = () => {
     >
       Importar:
       <VisuallyHiddenInput
-        type="file"
         type="file"
         accept=".json,.esjc"
         onChange={handleImport}
